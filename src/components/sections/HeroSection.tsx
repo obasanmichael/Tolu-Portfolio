@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Download, ArrowDown, Terminal } from "lucide-react";
+import { Download, Terminal } from "lucide-react";
 import { SocialLink } from "@/components/ui/SocialLink";
 import { RotatingText } from "@/components/motion/RotatingText";
 import { TypewriterText } from "@/components/motion/TypewriterText";
