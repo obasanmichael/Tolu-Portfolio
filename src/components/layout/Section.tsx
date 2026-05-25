@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { RevealText } from "@/components/motion/RevealText";
 
 interface SectionProps {
   id?: string;
@@ -18,7 +19,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("relative px-4 py-20 sm:px-6 lg:px-8", className)}
+      className={cn("relative px-4 py-24 sm:px-6 lg:px-8", className)}
     >
       <div
         className={cn(
@@ -51,26 +52,23 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-12",
+        "mb-14",
         align === "center" && "text-center",
         className
       )}
     >
       {label && (
-        <p className="mb-3 text-xs font-medium uppercase tracking-widest text-accent">
-          {label}
-        </p>
+        <RevealText delay={0.04}>
+          <p className="eyebrow mb-4 text-accent">{label}</p>
+        </RevealText>
       )}
-      <h2
-        className="text-3xl font-semibold tracking-tight text-text sm:text-4xl"
-        style={{ fontFamily: "var(--font-heading)" }}
-      >
-        {title}
-      </h2>
+      <RevealText delay={0.1}>
+        <h2 className="section-title text-text">{title}</h2>
+      </RevealText>
       {description && (
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          {description}
-        </p>
+        <RevealText delay={0.18}>
+          <p className="body-large mt-4 max-w-2xl text-muted">{description}</p>
+        </RevealText>
       )}
     </div>
   );

@@ -20,7 +20,7 @@ type ButtonProps = ButtonBaseProps &
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent text-bg font-semibold hover:bg-[#7dd3fc] shadow-[0_0_20px_rgba(56,189,248,0.25)] hover:shadow-[0_0_30px_rgba(56,189,248,0.4)] transition-all",
+    "bg-accent text-bg font-semibold hover:bg-[#b8f5ae] shadow-[0_0_20px_rgba(155,239,143,0.22)] hover:shadow-[0_0_30px_rgba(155,239,143,0.38)] transition-all",
   secondary:
     "bg-surface border border-border hover:border-border-hover text-text transition-all",
   ghost:
@@ -43,7 +43,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:pointer-events-none select-none",
+    "inline-flex items-center justify-center font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:pointer-events-none select-none",
     variantStyles[variant],
     sizeStyles[size],
     className

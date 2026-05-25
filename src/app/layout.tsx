@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Geist_Mono } from "next/font/google";
+import { Geist, Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
 });
@@ -84,7 +83,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable}`}
+      className={`${geist.variable} ${spaceGrotesk.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen antialiased">{children}</body>
     </html>

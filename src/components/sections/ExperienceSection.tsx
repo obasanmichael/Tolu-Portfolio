@@ -18,7 +18,7 @@ export function ExperienceSection() {
     <Section id="experience">
       <SectionHeading
         label="Experience"
-        title="Professional background."
+        title="Where I've worked."
       />
 
       <div className="relative">

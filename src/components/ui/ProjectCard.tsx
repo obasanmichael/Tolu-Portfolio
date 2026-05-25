@@ -16,7 +16,7 @@ const statusLabels: Record<Project["status"], string> = {
 };
 
 const statusColors: Record<Project["status"], string> = {
-  live: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+  live: "text-accent bg-accent-soft border-border-hover",
   "in-development": "text-amber-400 bg-amber-400/10 border-amber-400/20",
   private: "text-muted bg-surface border-border",
   mvp: "text-accent bg-accent-soft border-border-hover",
@@ -61,7 +61,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(300px circle at ${glowPos.x}% ${glowPos.y}%, rgba(56,189,248,0.06), transparent 70%)`,
+          background: `radial-gradient(280px circle at ${glowPos.x}% ${glowPos.y}%, rgba(155,239,143,0.07), transparent 70%)`,
         }}
       />
 

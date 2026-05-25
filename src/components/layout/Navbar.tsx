@@ -7,9 +7,9 @@ import { Menu, X, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "About", href: "#about" },
+  { label: "Work", href: "#projects" },
   { label: "Stack", href: "#stack" },
-  { label: "Projects", href: "#projects" },
+  { label: "Principles", href: "#principles" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
 ];
@@ -97,8 +97,8 @@ export function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-indicator"
-                        className="absolute inset-x-2 -bottom-px h-px bg-accent"
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="absolute left-1/2 -bottom-0.5 h-1 w-1 -translate-x-1/2 rounded-full bg-accent"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
                       />
                     )}
                   </button>

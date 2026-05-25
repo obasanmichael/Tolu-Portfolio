@@ -1,92 +1,34 @@
 "use client";
 
-import { motion } from "motion/react";
-import { Download, Terminal } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { Download } from "lucide-react";
 import { SocialLink } from "@/components/ui/SocialLink";
-import { RotatingText } from "@/components/motion/RotatingText";
-import { TypewriterText } from "@/components/motion/TypewriterText";
+import { TypingText } from "@/components/motion/TypingText";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import { socials } from "@/data/socials";
 
-function ProfileCard() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className="relative w-full max-w-sm"
-    >
-      {/* Glow behind card */}
-      <div className="absolute -inset-4 rounded-3xl bg-accent/5 blur-2xl" />
+const TYPING_PHRASES = [
+  "building JobTrackr.",
+  "designing polished interfaces.",
+  "shipping reliable products.",
+  "connecting frontend to real business workflows.",
+];
 
-      {/* Card */}
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-surface font-mono text-sm">
-        {/* Title bar */}
-        <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-          <div className="flex gap-1.5">
-            <div className="h-3 w-3 rounded-full bg-red-500/60" />
-            <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
-            <div className="h-3 w-3 rounded-full bg-green-500/60" />
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-muted">
-            <Terminal size={11} />
-            <span>profile.json</span>
-          </div>
-        </div>
+const FOCUS_ITEMS = ["JobTrackr", "React Native", "NestJS", "Product engineering"];
 
-        {/* Content */}
-        <div className="p-5 space-y-2.5" style={{ fontFamily: "var(--font-mono)" }}>
-          <p className="text-muted">{"{"}</p>
-          <div className="pl-4 space-y-2">
-            <p>
-              <span className="text-accent/70">&quot;status&quot;</span>
-              <span className="text-muted">: </span>
-              <span className="text-emerald-400">&quot;building&quot;</span>
-            </p>
-            <p>
-              <span className="text-accent/70">&quot;focus&quot;</span>
-              <span className="text-muted">: </span>
-              <span className="text-text/80">&quot;full-stack products&quot;</span>
-            </p>
-            <p>
-              <span className="text-accent/70">&quot;current&quot;</span>
-              <span className="text-muted">: </span>
-              <span className="text-text/80">
-                &quot;<TypewriterText text="JobTrackr" delay={1200} speed={80} />
-                &quot;
-              </span>
-            </p>
-            <p>
-              <span className="text-accent/70">&quot;stack&quot;</span>
-              <span className="text-muted">: </span>
-              <span className="text-text/80">&quot;Next.js / NestJS / PG&quot;</span>
-            </p>
-            <p>
-              <span className="text-accent/70">&quot;open_to&quot;</span>
-              <span className="text-muted">: </span>
-              <span className="text-amber-400">&quot;opportunities&quot;</span>
-            </p>
-          </div>
-          <p className="text-muted">{"}"}</p>
-        </div>
-
-        {/* Bottom accent line */}
-        <div className="h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
-      </div>
-    </motion.div>
-  );
-}
-
-const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: EASE },
-});
+const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export function HeroSection() {
-  const handleScrollToProjects = () => {
-    const el = document.getElementById("projects");
+  const prefersReduced = useReducedMotion();
+
+  const fadeUp = (delay = 0) => ({
+    initial: prefersReduced ? false : { opacity: 0, y: 28 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: EASE },
+  });
+
+  const handleScrollTo = (id: string) => {
+    const el = document.getElementById(id);
     if (!el) return;
     window.scrollTo({
       top: el.getBoundingClientRect().top + window.scrollY - 80,
@@ -96,112 +38,97 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative flex min-h-screen items-center overflow-hidden px-4 pt-16 pb-12 sm:px-6 lg:px-8"
+      className="relative min-h-screen overflow-hidden px-4 pt-28 pb-16 sm:px-6 md:pt-36 lg:px-8"
       aria-label="Hero"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-grid" aria-hidden="true" />
-      <div className="absolute inset-0 bg-radial-glow" aria-hidden="true" />
+      {/* Very subtle grid */}
+      <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" aria-hidden="true" />
+      {/* Radial glow at top */}
+      <div className="pointer-events-none absolute inset-0 bg-radial-glow" aria-hidden="true" />
+      {/* Bottom fade */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
-        style={{
-          background:
-            "linear-gradient(to top, #080a0f, transparent)",
-        }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
+        style={{ background: "linear-gradient(to top, #070907, transparent)" }}
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto w-full max-w-6xl">
-        <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
-          {/* Left: copy */}
-          <div className="max-w-2xl flex-1">
-            {/* Availability badge */}
-            <motion.div {...fadeUp(0.1)} className="mb-6">
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-medium text-emerald-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                </span>
-                Open to opportunities
-              </span>
-            </motion.div>
+      <div className="relative mx-auto max-w-6xl">
+        {/* Eyebrow */}
+        <motion.p
+          {...fadeUp(0.05)}
+          className="eyebrow mb-8 text-accent"
+        >
+          Tolulope Obasan · Full-stack Engineer
+        </motion.p>
 
-            {/* Rotating role */}
-            <motion.p
-              {...fadeUp(0.15)}
-              className="mb-3 text-base font-medium text-muted"
-            >
-              <RotatingText />
-            </motion.p>
+        {/* Main headline */}
+        <motion.h1
+          {...fadeUp(0.12)}
+          className="hero-title max-w-5xl text-text"
+        >
+          I build useful software for{" "}
+          <span className="text-gradient-accent">web, mobile,</span>
+          <br />
+          and real operations.
+        </motion.h1>
 
-            {/* Main headline */}
-            <motion.h1
-              {...fadeUp(0.2)}
-              className="text-4xl font-semibold leading-[1.15] tracking-tight text-text sm:text-5xl lg:text-[3.5rem]"
-              style={{ fontFamily: "var(--font-heading)" }}
-            >
-              I build practical software systems for real{" "}
-              <span className="text-gradient-accent">product</span> and{" "}
-              <span className="text-gradient-accent">business</span> problems.
-            </motion.h1>
+        {/* Typing line */}
+        <motion.div
+          {...fadeUp(0.24)}
+          className="mt-8 text-lg text-muted sm:text-xl"
+        >
+          Currently{" "}
+          <TypingText phrases={TYPING_PHRASES} />
+        </motion.div>
 
-            {/* Subtext */}
-            <motion.p
-              {...fadeUp(0.28)}
-              className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
-            >
-              I&apos;m Tolulope Obasan, a full-stack engineer working across web,
-              backend, mobile, and product-focused software development.
-            </motion.p>
+        {/* Subtext */}
+        <motion.p
+          {...fadeUp(0.34)}
+          className="body-large mt-6 max-w-2xl text-muted"
+        >
+          Full-stack engineer focused on polished interfaces, backend APIs,
+          mobile products, and reliable software delivery.
+        </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div
-              {...fadeUp(0.36)}
-              className="mt-8 flex flex-wrap items-center gap-3"
-            >
-              <button
-                onClick={handleScrollToProjects}
-                className="inline-flex h-11 items-center gap-2 rounded-xl bg-accent px-6 text-sm font-semibold text-bg shadow-[0_0_24px_rgba(56,189,248,0.2)] transition-all duration-200 hover:bg-[#7dd3fc] hover:shadow-[0_0_36px_rgba(56,189,248,0.35)]"
-              >
-                View Projects
-              </button>
-              <a
-                href="/Tolu_resume.pdf"
-                download
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-surface px-6 text-sm font-medium text-text transition-all duration-200 hover:border-border-hover hover:bg-surface-alt"
-              >
-                <Download size={14} />
-                Download CV
-              </a>
-              <button
-                onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
-                }}
-                className="inline-flex h-11 items-center gap-2 rounded-xl px-5 text-sm font-medium text-muted transition-colors duration-200 hover:text-text"
-              >
-                Contact Me
-              </button>
-            </motion.div>
+        {/* CTAs */}
+        <motion.div
+          {...fadeUp(0.44)}
+          className="mt-10 flex flex-wrap items-center gap-4"
+        >
+          <MagneticButton onClick={() => handleScrollTo("projects")}>
+            View selected work
+          </MagneticButton>
+          <MagneticButton href="/Tolu_resume.pdf" download variant="secondary">
+            <Download size={14} />
+            Download CV
+          </MagneticButton>
+        </motion.div>
 
-            {/* Social links */}
-            <motion.div
-              {...fadeUp(0.44)}
-              className="mt-8 flex items-center gap-4"
-            >
-              {socials.slice(0, 5).map((s) => (
-                <SocialLink key={s.icon} label={s.label} href={s.href} icon={s.icon} />
-              ))}
-            </motion.div>
-          </div>
+        {/* Social links */}
+        <motion.div
+          {...fadeUp(0.52)}
+          className="mt-10 flex items-center gap-4"
+        >
+          {socials.slice(0, 5).map((s) => (
+            <SocialLink key={s.icon} label={s.label} href={s.href} icon={s.icon} />
+          ))}
+        </motion.div>
 
-          {/* Right: profile card */}
-          <div className="hidden lg:flex lg:shrink-0 lg:items-center lg:justify-end">
-            <ProfileCard />
-          </div>
-        </div>
-
-
+        {/* Focus strip */}
+        <motion.div
+          {...fadeUp(0.6)}
+          className="mt-16 flex flex-wrap items-center gap-2 text-xs text-text-soft"
+        >
+          <span className="text-accent/60 tracking-widest uppercase text-[0.65rem]">
+            Current focus
+          </span>
+          {FOCUS_ITEMS.map((item) => (
+            <span key={item} className="flex items-center gap-2">
+              <span className="text-muted/60">·</span>
+              <span className="text-muted/70">{item}</span>
+            </span>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

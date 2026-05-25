@@ -2,24 +2,26 @@
 
 @theme {
   /* Brand Colors */
-  --color-bg: #080a0f;
-  --color-surface: #10141d;
-  --color-surface-alt: #151a24;
-  --color-border: rgba(255, 255, 255, 0.07);
-  --color-border-hover: rgba(56, 189, 248, 0.3);
+  --color-bg: #070907;
+  --color-surface: #0d120d;
+  --color-surface-alt: #111811;
+  --color-border: rgba(155, 239, 143, 0.14);
+  --color-border-hover: rgba(155, 239, 143, 0.32);
 
   /* Text */
-  --color-text: #f5f7fa;
-  --color-muted: #9ba3af;
+  --color-text: #f4f7f2;
+  --color-muted: #a5ada2;
+  --color-text-soft: #6f7a6d;
 
-  /* Accent */
-  --color-accent: #38bdf8;
-  --color-accent-soft: rgba(56, 189, 248, 0.12);
-  --color-accent-glow: rgba(56, 189, 248, 0.25);
+  /* Brand Accent — mint green */
+  --color-accent: #9bef8f;
+  --color-accent-soft: rgba(155, 239, 143, 0.12);
+  --color-accent-glow: rgba(155, 239, 143, 0.25);
 
   /* Typography */
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
   --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-body: var(--font-geist), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Fira Code", monospace;
 
   /* Spacing & Layout */
@@ -37,39 +39,42 @@ html {
 }
 
 body {
-  background-color: #080a0f;
-  color: #f5f7fa;
-  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: #070907;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(155, 239, 143, 0.06), transparent 28rem),
+    linear-gradient(180deg, #070907 0%, #090c09 100%);
+  color: #f4f7f2;
+  font-family: var(--font-geist), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(56, 189, 248, 0.25);
-  color: #f5f7fa;
+  background-color: rgba(155, 239, 143, 0.2);
+  color: #f4f7f2;
 }
 
 /* Focus visible */
 :focus-visible {
-  outline: 2px solid #38bdf8;
+  outline: 2px solid #9bef8f;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #080a0f;
+  background: #070907;
 }
 ::-webkit-scrollbar-thumb {
-  background: #151a24;
+  background: #111811;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.3);
+  background: rgba(155, 239, 143, 0.25);
 }
 
 /* Reduced motion */
@@ -83,36 +88,80 @@ body {
   }
 }
 
-/* Subtle background grid */
+/* Subtle background grid — kept very faint */
 .bg-grid {
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
 /* Radial glow overlay */
 .bg-radial-glow {
   background: radial-gradient(
-    ellipse 80% 50% at 50% -20%,
-    rgba(56, 189, 248, 0.08),
+    ellipse 70% 40% at 50% -10%,
+    rgba(155, 239, 143, 0.06),
     transparent
   );
 }
 
-/* Text gradient */
+/* ── Typography utilities ────────────────────────────── */
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7.5vw, 8rem);
+  line-height: 0.93;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.body-large {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
+}
+
+/* Text gradients */
 .text-gradient {
-  background: linear-gradient(135deg, #f5f7fa 0%, #9ba3af 100%);
+  background: linear-gradient(135deg, #f4f7f2 0%, #a5ada2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%);
+  background: linear-gradient(135deg, #9bef8f 0%, #c3f7bb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Clip-path reveal animation */
+@keyframes reveal-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0% 0 0 0);
+    opacity: 1;
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

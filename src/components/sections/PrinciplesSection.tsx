@@ -6,6 +6,8 @@ import { Section, SectionHeading } from "@/components/layout/Section";
 import { principles } from "@/data/principles";
 import { cn } from "@/lib/utils";
 
+const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 export function PrinciplesSection() {
   const [active, setActive] = useState(0);
 
@@ -14,18 +16,18 @@ export function PrinciplesSection() {
       <SectionHeading
         label="How I Work"
         title="Engineering principles."
-        description="I like building software with a clear sense of purpose, not just screens and features."
+        description="The principles I bring into every product and engineering workflow."
       />
 
       <div className="grid gap-6 lg:grid-cols-5">
-        {/* Principle list — desktop sidebar */}
-        <div className="hidden lg:col-span-2 lg:flex lg:flex-col lg:gap-2">
+        {/* Sidebar — desktop */}
+        <div className="hidden lg:col-span-2 lg:flex lg:flex-col lg:gap-1.5">
           {principles.map((p, i) => (
             <button
               key={p.number}
               onClick={() => setActive(i)}
               className={cn(
-                "group flex items-start gap-4 rounded-xl p-4 text-left transition-all duration-200",
+                "group flex items-center gap-5 rounded-xl p-4 text-left transition-all duration-200",
                 active === i
                   ? "border border-border-hover bg-surface"
                   : "border border-transparent hover:border-border hover:bg-surface/50"
@@ -33,10 +35,10 @@ export function PrinciplesSection() {
             >
               <span
                 className={cn(
-                  "mt-0.5 text-xs font-mono font-semibold transition-colors",
-                  active === i ? "text-accent" : "text-muted"
+                  "shrink-0 text-3xl font-bold leading-none transition-colors",
+                  active === i ? "text-accent/30" : "text-text-soft/30"
                 )}
-                style={{ fontFamily: "var(--font-mono)" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {p.number}
               </span>
@@ -52,26 +54,26 @@ export function PrinciplesSection() {
           ))}
         </div>
 
-        {/* Active principle detail — desktop */}
+        {/* Active detail — desktop */}
         <div className="hidden lg:col-span-3 lg:block">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
-              initial={{ opacity: 0, x: 16 }}
+              initial={{ opacity: 0, x: 18 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -16 }}
-              transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-              className="flex h-full flex-col justify-center rounded-2xl border border-border-hover bg-surface p-8"
+              exit={{ opacity: 0, x: -18 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="flex h-full flex-col justify-center rounded-2xl border border-border-hover bg-surface p-9"
             >
               <span
-                className="mb-4 text-4xl font-bold text-accent/20"
-                style={{ fontFamily: "var(--font-heading)" }}
+                className="mb-5 block text-7xl font-bold leading-none text-accent/15"
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {principles[active].number}
               </span>
               <h3
-                className="mb-4 text-2xl font-semibold text-text"
-                style={{ fontFamily: "var(--font-heading)" }}
+                className="mb-4 text-2xl font-semibold tracking-tight text-text"
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {principles[active].title}
               </h3>
@@ -82,7 +84,7 @@ export function PrinciplesSection() {
           </AnimatePresence>
         </div>
 
-        {/* Mobile: all cards stacked */}
+        {/* Mobile: stacked cards */}
         <div className="col-span-full flex flex-col gap-4 lg:hidden">
           {principles.map((p, i) => (
             <motion.div
@@ -90,13 +92,13 @@ export function PrinciplesSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              transition={{ duration: 0.45, delay: i * 0.07, ease: EASE }}
               className="rounded-xl border border-border bg-surface p-5"
             >
-              <div className="mb-2 flex items-center gap-3">
+              <div className="mb-3 flex items-center gap-4">
                 <span
-                  className="text-xs font-mono font-semibold text-accent"
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className="text-3xl font-bold leading-none text-accent/25"
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {p.number}
                 </span>

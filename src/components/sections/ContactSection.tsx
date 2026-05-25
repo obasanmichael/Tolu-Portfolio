@@ -62,11 +62,10 @@ export function ContactSection() {
         >
           <SectionHeading
             label="Contact"
-            title="Let's talk."
+            title="Have a role, product, or project in mind?"
           />
           <p className="text-base leading-relaxed text-muted">
-            Have a role, project, collaboration, or product idea worth discussing?
-            Send me a message directly on WhatsApp, I respond promptly.
+            Send a message. I respond promptly.
           </p>
 
           <div className="mt-8 flex flex-col gap-3.5">
@@ -198,7 +197,7 @@ export function ContactSection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-3 text-sm font-semibold text-bg shadow-[0_0_24px_rgba(56,189,248,0.2)] transition-all duration-200 hover:bg-[#7dd3fc] hover:shadow-[0_0_36px_rgba(56,189,248,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-3 text-sm font-semibold text-bg shadow-[0_0_24px_rgba(155,239,143,0.2)] transition-all duration-200 hover:bg-[#b8f5ae] hover:shadow-[0_0_36px_rgba(155,239,143,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <MessageCircle size={15} />
                 Send via WhatsApp

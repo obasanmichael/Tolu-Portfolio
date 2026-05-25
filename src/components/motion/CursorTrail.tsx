@@ -10,8 +10,8 @@ export function CursorTrail() {
   const mouseY = useMotionValue(0);
   const reducedMotion = useRef(false);
 
-  const springX = useSpring(mouseX, { damping: 28, stiffness: 200, mass: 0.5 });
-  const springY = useSpring(mouseY, { damping: 28, stiffness: 200, mass: 0.5 });
+  const springX = useSpring(mouseX, { damping: 30, stiffness: 220, mass: 0.5 });
+  const springY = useSpring(mouseY, { damping: 30, stiffness: 220, mass: 0.5 });
 
   useEffect(() => {
     reducedMotion.current = window.matchMedia(
@@ -50,10 +50,10 @@ export function CursorTrail() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-9999 overflow-hidden"
       aria-hidden="true"
     >
-      {/* Large ambient glow */}
+      {/* Ambient aura */}
       <motion.div
         className="absolute"
         style={{
@@ -61,16 +61,16 @@ export function CursorTrail() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          width: 400,
-          height: 400,
+          width: 360,
+          height: 360,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(56,189,248,0.06) 0%, rgba(56,189,248,0) 70%)",
+            "radial-gradient(circle, rgba(155,239,143,0.055) 0%, rgba(155,239,143,0) 70%)",
           opacity: visible ? 1 : 0,
           transition: "opacity 300ms ease",
         }}
       />
-      {/* Small precise dot */}
+      {/* Precise dot */}
       <motion.div
         className="absolute"
         style={{
@@ -78,11 +78,11 @@ export function CursorTrail() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          width: 8,
-          height: 8,
+          width: 7,
+          height: 7,
           borderRadius: "50%",
-          background: "rgba(56,189,248,0.6)",
-          boxShadow: "0 0 12px rgba(56,189,248,0.4)",
+          background: "rgba(155,239,143,0.55)",
+          boxShadow: "0 0 14px rgba(155,239,143,0.28)",
           opacity: visible ? 1 : 0,
           transition: "opacity 200ms ease",
         }}
