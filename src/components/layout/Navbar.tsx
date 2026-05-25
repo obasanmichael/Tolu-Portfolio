@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-/* ── Animated hamburger icon ─────────────────────── */
+/* ── Animated hamburger ──────────────────────────── */
 function MenuIcon({ open }: { open: boolean }) {
   return (
     <span className="relative flex h-5 w-5 flex-col items-center justify-center gap-[5px]">
@@ -39,7 +39,146 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-/* ── Main navbar ─────────────────────────────────── */
+/* ── Desktop nav bar ─────────────────────────────── */
+function DesktopNav({
+  scrolled,
+  activeSection,
+  scrollTo,
+}: {
+  scrolled: boolean;
+  activeSection: string;
+  scrollTo: (href: string) => void;
+}) {
+  return (
+    <div className="hidden w-full items-center justify-between md:flex">
+      <motion.div
+        initial={false}
+        animate={{
+          y: scrolled ? -2 : 0,
+          opacity: scrolled ? 1 : 0.92,
+        }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-auto"
+      >
+        <Link
+          href="/"
+          aria-label="Tolulope Obasan — home"
+          className="group flex items-center gap-3"
+        >
+          <span className="relative flex h-10 w-10 items-center justify-center">
+            <span
+              className="absolute inset-0 rounded-2xl border border-accent/15 bg-accent/5 backdrop-blur-xl transition-all duration-300 group-hover:rotate-6 group-hover:border-accent/30 group-hover:bg-accent/10"
+              aria-hidden="true"
+            />
+            <span
+              className="absolute -inset-1 rounded-[1.2rem] border border-accent/0 bg-linear-to-br from-accent/12 via-transparent to-transparent opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100"
+              aria-hidden="true"
+            />
+            <span
+              className="relative flex h-7 w-7 items-center justify-center rounded-xl bg-bg/90 text-[0.72rem] font-semibold text-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_18px_rgba(155,239,143,0.08)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              T
+            </span>
+          </span>
+
+          <span className="hidden flex-col leading-none lg:flex">
+            <span
+              className="text-[0.78rem] font-semibold tracking-tight text-text/80 transition-colors group-hover:text-text"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Tolulope
+            </span>
+            <span className="mt-1 text-[0.58rem] font-medium uppercase tracking-[0.24em] text-text-soft/70 transition-colors group-hover:text-accent/70">
+              Obasan
+            </span>
+          </span>
+        </Link>
+      </motion.div>
+
+      <nav
+        aria-label="Main navigation"
+        className="pointer-events-auto absolute left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          initial={false}
+          animate={{
+            y: scrolled ? -2 : 0,
+            boxShadow: scrolled
+              ? "0 14px 44px rgba(0,0,0,0.46), 0 0 0 1px rgba(155,239,143,0.1), inset 0 1px 0 rgba(255,255,255,0.06)"
+              : "0 8px 28px rgba(0,0,0,0.24), 0 0 0 1px rgba(155,239,143,0.06), inset 0 1px 0 rgba(255,255,255,0.04)",
+          }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className={cn(
+            "relative flex items-center gap-1 overflow-hidden rounded-2xl border px-1.5 py-1.5 backdrop-blur-2xl transition-colors duration-300",
+            scrolled ? "border-border bg-bg/82" : "border-border/50 bg-bg/42"
+          )}
+        >
+          <div
+            className="pointer-events-none absolute inset-x-5 top-0 h-px bg-linear-to-r from-transparent via-accent/35 to-transparent"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute -top-14 left-1/2 h-20 w-40 -translate-x-1/2 rounded-full bg-accent/8 blur-2xl"
+            aria-hidden="true"
+          />
+
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.slice(1);
+            return (
+              <button
+                key={link.href}
+                onClick={() => scrollTo(link.href)}
+                className={cn(
+                  "group relative rounded-xl px-3.5 py-2 text-[0.76rem] font-medium transition-colors duration-200",
+                  isActive ? "text-accent" : "text-muted hover:text-text"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-active"
+                    className="absolute inset-0 rounded-xl border border-accent/20 bg-accent/10 shadow-[0_0_24px_rgba(155,239,143,0.12),inset_0_1px_0_rgba(255,255,255,0.06)]"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                <span className="absolute inset-x-3 bottom-1 h-px origin-center scale-x-0 bg-accent/50 transition-transform duration-200 group-hover:scale-x-100" />
+                <span className="relative z-10">{link.label}</span>
+              </button>
+            );
+          })}
+        </motion.div>
+      </nav>
+
+      <motion.div
+        initial={false}
+        animate={{
+          y: scrolled ? -2 : 0,
+          opacity: scrolled ? 0.96 : 0.88,
+        }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-auto"
+      >
+        <motion.a
+          href="/Tolu_resume.pdf"
+          download
+          whileHover={{ y: -1 }}
+          whileTap={{ scale: 0.97 }}
+          className={cn(
+            "group flex items-center gap-2 rounded-full border px-4 py-2 text-[0.76rem] font-medium text-muted backdrop-blur-2xl transition-all duration-300 hover:border-border-hover hover:bg-accent-soft hover:text-accent",
+            scrolled
+              ? "border-border-hover bg-bg/78 shadow-[0_10px_32px_rgba(0,0,0,0.35)]"
+              : "border-border/50 bg-bg/38"
+          )}
+        >
+          <Download size={12} />
+          CV
+        </motion.a>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ── Main export ─────────────────────────────────── */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,16 +186,14 @@ export function Navbar() {
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 30);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Section observer */
   useEffect(() => {
     const ids = navLinks.map((l) => l.href.slice(1));
     const observers: IntersectionObserver[] = [];
-
     ids.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -67,11 +204,9 @@ export function Navbar() {
       obs.observe(el);
       observers.push(obs);
     });
-
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  /* Lock body scroll when mobile menu is open */
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -79,6 +214,7 @@ export function Navbar() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
+    setActiveSection(href.slice(1));
     const el = document.getElementById(href.slice(1));
     if (el) {
       window.scrollTo({
@@ -90,113 +226,50 @@ export function Navbar() {
 
   return (
     <>
-      {/* ── Desktop / tablet header ─────────────── */}
-      <header
-        className={cn(
-          "fixed inset-x-0 top-0 z-[120] transition-all duration-500",
-          scrolled ? "py-3" : "py-5"
-        )}
-      >
-        <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      {/* ── Header shell ────────────────────────── */}
+      <header className="fixed inset-x-0 top-0 z-120">
+        <div
+          className={cn(
+            "mx-auto flex max-w-6xl items-center justify-between px-4 transition-all duration-500 sm:px-6 lg:px-8",
+            scrolled ? "py-2.5" : "py-4"
+          )}
+        >
+          {/* Desktop nav bar — centered with auto margins */}
+          <div className="hidden w-full items-center justify-center md:flex">
+            <DesktopNav
+              scrolled={scrolled}
+              activeSection={activeSection}
+              scrollTo={scrollTo}
+            />
+          </div>
 
-          {/* Logo */}
-          <Link
-            href="/"
-            aria-label="Tolulope Obasan | home"
-            className="group relative z-10 flex items-center gap-2"
-          >
-            <motion.span
-              whileHover={{ scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-surface text-sm font-bold text-accent"
-              style={{ fontFamily: "var(--font-display)" }}
+          {/* Mobile: logo left + hamburger right */}
+          <div className="flex w-full items-center justify-between md:hidden">
+            <Link
+              href="/"
+              aria-label="Tolulope Obasan — home"
+              className="flex items-center gap-2"
             >
-              T
-            </motion.span>
-            <span
-              className="hidden text-sm font-medium text-text/70 transition-colors group-hover:text-text sm:block"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Tolulope
-            </span>
-          </Link>
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-accent/20 bg-accent/10 text-sm font-bold text-accent"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                T
+              </span>
+              <span
+                className="text-sm font-medium text-text/70"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Tolulope
+              </span>
+            </Link>
 
-          {/* ── Floating pill nav — hidden on mobile ── */}
-          <nav
-            aria-label="Main navigation"
-            className={cn(
-              "absolute left-1/2 hidden -translate-x-1/2 md:flex",
-            )}
-          >
-            <motion.div
-              animate={scrolled
-                ? {
-                    boxShadow: "0 0 0 1px rgba(155,239,143,0.14), 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
-                  }
-                : {
-                    boxShadow: "0 0 0 1px rgba(155,239,143,0.08), 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
-                  }
-              }
-              transition={{ duration: 0.4 }}
-              className={cn(
-                "flex items-center gap-0.5 rounded-full border px-1.5 py-1.5 backdrop-blur-2xl transition-all duration-500",
-                scrolled
-                  ? "border-border bg-bg/80"
-                  : "border-border/60 bg-bg/40"
-              )}
-            >
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.href.slice(1);
-                return (
-                  <button
-                    key={link.href}
-                    onClick={() => scrollTo(link.href)}
-                    className={cn(
-                      "relative rounded-full px-4 py-1.5 text-[0.8rem] font-medium transition-colors duration-200",
-                      isActive ? "text-bg" : "text-muted hover:text-text"
-                    )}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-active-pill"
-                        className="absolute inset-0 rounded-full bg-accent"
-                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                      />
-                    )}
-                    <span className="relative z-10">{link.label}</span>
-                  </button>
-                );
-              })}
-            </motion.div>
-          </nav>
-
-          {/* Right side */}
-          <div className="relative z-10 flex items-center gap-3">
-            {/* CV download — desktop */}
-            <motion.a
-              href="/Tolu_resume.pdf"
-              download
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className={cn(
-                "hidden items-center gap-2 rounded-full border px-4 py-1.5 text-[0.8rem] font-medium transition-all duration-300 md:inline-flex",
-                scrolled
-                  ? "border-border-hover bg-accent-soft text-accent hover:bg-accent hover:text-bg"
-                  : "border-border/50 bg-bg/30 text-muted backdrop-blur-xl hover:border-border-hover hover:text-accent"
-              )}
-            >
-              <Download size={12} />
-              CV
-            </motion.a>
-
-            {/* Hamburger — mobile only */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               className={cn(
-                "relative z-[110] flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-200 md:hidden",
+                "flex h-9 w-9 items-center justify-center rounded-xl border transition-all duration-200",
                 mobileOpen
                   ? "border-border-hover bg-surface-alt text-text"
                   : "border-border/50 bg-surface/60 text-muted hover:border-border hover:text-text"
@@ -208,17 +281,16 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* ── Full-screen mobile overlay ────────────── */}
+      {/* ── Mobile full-screen overlay ───────────── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed inset-0 z-[110] flex flex-col bg-bg/[0.97] backdrop-blur-2xl md:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-110 flex flex-col bg-bg/97 backdrop-blur-2xl md:hidden"
           >
-            {/* Nav links — pt accounts for fixed header height */}
             <nav
               aria-label="Mobile navigation"
               className="flex flex-1 flex-col justify-center px-6 pt-20"
@@ -241,15 +313,15 @@ export function Navbar() {
                         onClick={() => scrollTo(link.href)}
                         className={cn(
                           "group flex w-full items-center justify-between rounded-2xl px-5 py-4 text-left transition-all duration-200",
-                          isActive
-                            ? "bg-accent-soft"
-                            : "hover:bg-surface"
+                          isActive ? "bg-accent-soft" : "hover:bg-surface"
                         )}
                       >
                         <span
                           className={cn(
                             "text-2xl font-semibold tracking-tight transition-colors",
-                            isActive ? "text-accent" : "text-text/80 group-hover:text-text"
+                            isActive
+                              ? "text-accent"
+                              : "text-text/80 group-hover:text-text"
                           )}
                           style={{ fontFamily: "var(--font-display)" }}
                         >
@@ -258,7 +330,9 @@ export function Navbar() {
                         <span
                           className={cn(
                             "text-xs transition-colors",
-                            isActive ? "text-accent/60" : "text-text-soft/40 group-hover:text-text-soft"
+                            isActive
+                              ? "text-accent/60"
+                              : "text-text-soft/40 group-hover:text-text-soft"
                           )}
                         >
                           0{i + 1}
@@ -270,7 +344,6 @@ export function Navbar() {
               </ul>
             </nav>
 
-            {/* Bottom: CV + socials */}
             <motion.div
               initial={prefersReduced ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}

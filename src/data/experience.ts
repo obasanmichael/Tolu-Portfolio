@@ -3,20 +3,20 @@ import { type Experience } from "@/types";
 export const experiences: Experience[] = [
   {
     id: "lendsqr-sre",
-    role: "Frontend & Site Reliability Engineer",
+    role: "Fullstack & Site Reliability Engineer",
     company: "Lendsqr",
     type: "full-time",
     duration: "Present",
     period: "Jan 2026 - Present",
     summary:
-      "I work on fixing frontend bugs and keeping the platform stable in production. When something breaks, I'm one of the people who figures out what went wrong and gets it back on track.",
+      "I work on fixing bugs and keeping the platform stable in production. When something breaks, I'm one of the people who figures out what went wrong and gets it back on track.",
     responsibilities: [
-      "Find and fix UI bugs on the React and Angular frontends, broken states, bad API rendering, layout issues",
+      "Find and fix UI bugs, broken states, bad API rendering, layout issues and backend bugs",
       "Triage errors using Sentry and Grafana, then deploy fixes through staging to production",
-      "Work with backend and product teams to make sure fixes are complete, not just surface-level",
       "Look into recurring issues to understand root causes and stop them from happening again",
+      "Work on features and improvements to the platform",
     ],
-    tools: ["React", "Angular", "TypeScript", "Sentry", "Grafana", "Git"],
+    tools: ["Next", "Angular", "TypeScript", "Sentry", "Grafana", "Git", "Express", "Node"],
   },
   {
     id: "vesti-intern",
@@ -32,6 +32,6 @@ export const experiences: Experience[] = [
       "Integrated APIs for financial transaction statements so users could download reports directly in the app",
       "Translated UI/UX designs into working Flutter components that matched the product spec",
     ],
-    tools: ["Flutter", "Firebase", "Dart"],
+    tools: ["Flutter", "Firebase", "Dart", "Node"],
   },
 ];

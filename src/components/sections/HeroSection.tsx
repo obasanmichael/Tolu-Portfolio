@@ -38,7 +38,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden px-4 pt-28 pb-16 sm:px-6 md:pt-36 lg:px-8"
+      className="relative overflow-hidden px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24 md:pt-40 md:pb-28 lg:px-8"
       aria-label="Hero"
     >
       {/* Very subtle grid */}
