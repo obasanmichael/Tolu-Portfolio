@@ -75,7 +75,7 @@ export function Navbar() {
             href="/"
             className="font-heading text-base font-semibold text-text transition-colors hover:text-accent"
             style={{ fontFamily: "var(--font-heading)" }}
-            aria-label="Tolulope Obasan — Home"
+            aria-label="Tolulope Obasan | Home"
           >
             <span className="text-accent">T</span>olulope
           </Link>
@@ -109,7 +109,7 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <a
-            href="/tolulope-obasan-cv.pdf"
+            href="/Tolu_resume.pdf"
             download
             className="hidden items-center gap-2 rounded-xl border border-border-hover bg-accent-soft px-4 py-2 text-sm font-medium text-accent transition-all duration-200 hover:bg-accent hover:text-bg md:inline-flex"
           >
@@ -153,7 +153,7 @@ export function Navbar() {
                 ))}
                 <li className="mt-2 border-t border-border pt-3">
                   <a
-                    href="/tolulope-obasan-cv.pdf"
+                    href="/Tolu_resume.pdf"
                     download
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent-soft"

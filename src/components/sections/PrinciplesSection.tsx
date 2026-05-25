@@ -14,7 +14,7 @@ export function PrinciplesSection() {
       <SectionHeading
         label="How I Work"
         title="Engineering principles."
-        description="I like building software with a clear sense of purpose — not just screens and features."
+        description="I like building software with a clear sense of purpose, not just screens and features."
       />
 
       <div className="grid gap-6 lg:grid-cols-5">

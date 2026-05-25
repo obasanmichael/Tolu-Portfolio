@@ -1,6 +1,4 @@
-// Replace with Tolulope's actual WhatsApp number in international format (no + or spaces)
-// e.g. "2348012345678"
-export const WHATSAPP_NUMBER = "YOUR_WHATSAPP_NUMBER";
+export const WHATSAPP_NUMBER = "2348148836800";
 
 export function createWhatsAppUrl({
   name,

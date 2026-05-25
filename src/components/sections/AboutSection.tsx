@@ -4,10 +4,10 @@ import { motion } from "motion/react";
 import { Section, SectionHeading } from "@/components/layout/Section";
 
 const traits = [
-  "I like clarity before complexity.",
-  "I build with user experience and maintainability in mind.",
-  "I care about reliability, not only visuals.",
-  "I enjoy working across frontend, backend, and product decisions.",
+  "Clarity over cleverness — always.",
+  "I think about the user, not just the ticket.",
+  "Reliable code matters more than impressive code.",
+  "I work well across frontend, backend, and product.",
 ];
 
 export function AboutSection() {
@@ -26,15 +26,13 @@ export function AboutSection() {
             title="Engineer who builds what matters."
           />
           <p className="text-base leading-relaxed text-muted">
-            I enjoy turning unclear product ideas into structured, usable software.
-            My work cuts across frontend engineering, backend systems, mobile apps,
-            and practical product execution. I care about clean interfaces, reliable
-            systems, and software that makes sense to the people using it.
+            I build across web, mobile, and backend — and I care about the whole
+            picture, not just my part of it. I want the product to make sense,
+            the code to be readable, and the user to actually enjoy using it.
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            I&apos;m not only interested in making things work — I&apos;m interested
-            in making things work well, be understood by the next person, and hold
-            up when the conditions change.
+            I work best when I understand the problem first. After that, I move
+            fast, ship clean, and leave things better than I found them.
           </p>
         </motion.div>
 

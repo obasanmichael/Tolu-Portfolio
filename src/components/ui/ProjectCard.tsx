@@ -198,6 +198,26 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           <span className="text-xs text-muted">Private project — available on request</span>
         </div>
       )}
+
+      {project.clientSites && project.clientSites.length > 0 && (
+        <div className="border-t border-border pt-4">
+          <p className="mb-2.5 text-xs font-medium text-muted">Client websites</p>
+          <div className="flex flex-wrap gap-2">
+            {project.clientSites.map((site) => (
+              <a
+                key={site.url}
+                href={site.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-alt px-3 py-1.5 text-xs font-medium text-muted transition-all duration-200 hover:border-border-hover hover:text-accent"
+              >
+                <ExternalLink size={11} />
+                {site.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

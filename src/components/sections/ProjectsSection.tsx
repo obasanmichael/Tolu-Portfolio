@@ -10,7 +10,7 @@ export function ProjectsSection() {
       <SectionHeading
         label="Work"
         title="Selected projects."
-        description="A selection of what I've built — from SaaS products to healthcare systems to client websites."
+        description="A selection of what I've built, from SaaS products to healthcare systems to client websites."
       />
 
       <div className="grid gap-5 md:grid-cols-2">

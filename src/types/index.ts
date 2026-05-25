@@ -15,6 +15,7 @@ export interface Project {
     github?: string;
     caseStudy?: string;
   };
+  clientSites?: { name: string; url: string }[];
   isPrivate?: boolean;
 }
 

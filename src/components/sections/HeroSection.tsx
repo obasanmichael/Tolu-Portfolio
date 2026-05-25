@@ -150,7 +150,7 @@ export function HeroSection() {
               {...fadeUp(0.28)}
               className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
             >
-              I&apos;m Tolulope Obasan — a full-stack engineer working across web,
+              I&apos;m Tolulope Obasan, a full-stack engineer working across web,
               backend, mobile, and product-focused software development.
             </motion.p>
 
@@ -166,7 +166,7 @@ export function HeroSection() {
                 View Projects
               </button>
               <a
-                href="/tolulope-obasan-cv.pdf"
+                href="/Tolu_resume.pdf"
                 download
                 className="inline-flex h-11 items-center gap-2 rounded-xl border border-border bg-surface px-6 text-sm font-medium text-text transition-all duration-200 hover:border-border-hover hover:bg-surface-alt"
               >
@@ -201,21 +201,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="absolute -bottom-2 left-0 hidden items-center gap-2 text-xs text-muted lg:flex"
-        >
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          >
-            <ArrowDown size={14} />
-          </motion.div>
-          <span>Scroll to explore</span>
-        </motion.div>
+
       </div>
     </section>
   );

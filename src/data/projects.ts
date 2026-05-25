@@ -8,7 +8,7 @@ export const projects: Project[] = [
     role: "Full-stack Engineer & Product Builder",
     status: "in-development",
     description:
-      "A job board and application tracking platform that helps users search for jobs, track applications, manage deadlines, review resumes, and receive job-alignment suggestions — all from one organized dashboard.",
+      "A job board and application tracking platform that helps users search for jobs, track applications, manage deadlines, review resumes, and receive job-alignment suggestions, all from one organized dashboard.",
     stack: [
       "Next.js",
       "React Native",
@@ -27,10 +27,10 @@ export const projects: Project[] = [
       "Admin dashboard and custom backend API",
     ],
     links: {
-      webRepo: "",
-      mobileRepo: "",
-      backendRepo: "",
-      live: "",
+      webRepo: "https://github.com/obasanmichael/JobTrackr-Frontend",
+      mobileRepo: "https://github.com/obasanmichael/JobTrackr-Mobile",
+      backendRepo: "https://github.com/obasanmichael/JobTrackr-Backend",
+      live: "https://job-trackr-frontend-wine.vercel.app/",
     },
   },
   {
@@ -50,8 +50,8 @@ export const projects: Project[] = [
       "FastAPI recommendation backend",
     ],
     links: {
-      github: "",
-      live: "",
+      github: "https://github.com/obasanmichael/travely-app",
+      live: "https://travely-app-two.vercel.app/",
     },
   },
   {
@@ -59,8 +59,8 @@ export const projects: Project[] = [
     name: "CBM-EMR",
     type: "Healthcare Web Application",
     role: "Lead Frontend Engineer",
-    status: "private",
-    isPrivate: true,
+    status: "live",
+    isPrivate: false,
     description:
       "A healthcare-focused electronic medical records web application. As Lead Frontend Engineer, I structured and implemented key frontend interfaces for managing patient, clinical, and operational workflows across the platform.",
     stack: ["React", "TypeScript", "Tailwind CSS"],
@@ -71,7 +71,9 @@ export const projects: Project[] = [
       "Improved UI structure and user experience across screens",
       "Collaborated closely with product and backend teams",
     ],
-    links: {},
+    links: {
+      live: "https://www.cbmemr.com/",
+    },
   },
   {
     id: "ravebil",
@@ -80,7 +82,7 @@ export const projects: Project[] = [
     role: "Web Developer & Founder",
     status: "live",
     description:
-      "Web design and digital presence work for service businesses — building clean websites that improve credibility, online visibility, lead capture, and customer trust for local and growing businesses.",
+      "Web design and digital presence work for service businesses — building clean websites that improve credibility, online visibility, lead capture, and customer trust.",
     stack: ["Next.js", "React", "Tailwind CSS", "Vercel"],
     highlights: [
       "Business websites and landing pages",
@@ -89,8 +91,10 @@ export const projects: Project[] = [
       "Lead capture forms and client handover",
       "Ongoing support and site maintenance",
     ],
-    links: {
-      live: "",
-    },
+    links: {},
+    clientSites: [
+      { name: "Titob Pharmacy", url: "https://www.titobpharmacy.com/" },
+      { name: "CURE-CARE Diagnostics", url: "https://www.curecaremedical-diagnostic.com.ng/" },
+    ],
   },
 ];

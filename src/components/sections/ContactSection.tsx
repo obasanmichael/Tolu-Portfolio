@@ -20,9 +20,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const quickLinks = [
-  { label: "GitHub", href: "https://github.com/tolulopeobasan", icon: "github" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/tolulopeobasan", icon: "linkedin" },
-  { label: "X / Twitter", href: "https://x.com/tolulopeobasan", icon: "twitter" },
+  { label: "GitHub", href: "https://github.com/obasanmichael", icon: "github" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/tolu-obasan", icon: "linkedin" },
+  { label: "X / Twitter", href: "https://x.com/MichaelObasan", icon: "twitter" },
   { label: "Email", href: "mailto:hello@tolulopeobasan.dev", icon: "mail" },
 ];
 
@@ -66,10 +66,10 @@ export function ContactSection() {
           />
           <p className="text-base leading-relaxed text-muted">
             Have a role, project, collaboration, or product idea worth discussing?
-            Send me a message directly on WhatsApp — I respond promptly.
+            Send me a message directly on WhatsApp, I respond promptly.
           </p>
 
-          <div className="mt-8 space-y-3">
+          <div className="mt-8 flex flex-col gap-3.5">
             {quickLinks.map(({ label, href, icon }) => (
               <SocialLink
                 key={label}

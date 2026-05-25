@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tolulope Obasan — Full-Stack Engineer",
+  title: "Tolulope Obasan | Full-Stack Engineer",
   description:
     "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
   keywords: [
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://tolulopeobasan.dev",
-    title: "Tolulope Obasan — Full-Stack Engineer",
+    title: "Tolulope Obasan | Full-Stack Engineer",
     description:
       "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
     siteName: "Tolulope Obasan",
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Tolulope Obasan — Full-Stack Engineer",
+        alt: "Tolulope Obasan | Full-Stack Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tolulope Obasan — Full-Stack Engineer",
+    title: "Tolulope Obasan | Full-Stack Engineer",
     description:
       "Full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
     images: ["/og-image.png"],

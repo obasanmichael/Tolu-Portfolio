@@ -74,8 +74,8 @@ export function SocialLink({
       rel="noopener noreferrer"
       aria-label={label}
       className={cn(
-        "inline-flex items-center gap-2 text-muted transition-colors duration-200 hover:text-accent",
-        showLabel ? "text-sm" : "",
+        "inline-flex items-center gap-2.5 text-muted transition-colors duration-200 hover:text-accent",
+        showLabel ? "text-sm flex" : "inline-flex",
         className
       )}
     >
