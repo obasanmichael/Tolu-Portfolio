@@ -82,7 +82,7 @@ export const projects: Project[] = [
     role: "Web Developer & Founder",
     status: "live",
     description:
-      "Web design and digital presence work for service businesses — building clean websites that improve credibility, online visibility, lead capture, and customer trust.",
+      "Web design and digital presence work for service businesses, building clean websites that improve credibility, online visibility, lead capture, and customer trust.",
     stack: ["Next.js", "React", "Tailwind CSS", "Vercel"],
     highlights: [
       "Business websites and landing pages",

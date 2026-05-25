@@ -28,7 +28,9 @@ const statusColors: Record<Project["status"], string> = {
 };
 
 function ProjectLinks({ project }: { project: Project }) {
-  const hasLinks = Object.values(project.links).some(Boolean);
+  const hasLinks =
+    Object.values(project.links).some(Boolean) ||
+    (project.clientSites && project.clientSites.length > 0);
   if (project.isPrivate || !hasLinks) return null;
 
   return (
@@ -94,9 +96,9 @@ function ProjectLinks({ project }: { project: Project }) {
           href={site.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-muted transition-colors hover:text-accent"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface-alt px-3 py-1.5 text-xs font-medium text-muted transition-all duration-200 hover:border-border-hover hover:text-accent"
         >
-          <ExternalLink size={12} />
+          <ExternalLink size={11} />
           {site.name}
         </a>
       ))}

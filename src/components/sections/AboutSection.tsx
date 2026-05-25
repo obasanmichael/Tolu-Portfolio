@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { Section, SectionHeading } from "@/components/layout/Section";
 
 const traits = [
-  "Clarity over cleverness — always.",
+  "Clarity over cleverness, always.",
   "I think about the user, not just the ticket.",
   "Reliable code matters more than impressive code.",
   "I work well across frontend, backend, and product.",
@@ -26,7 +26,7 @@ export function AboutSection() {
             title="Engineer who builds what matters."
           />
           <p className="text-base leading-relaxed text-muted">
-            I build across web, mobile, and backend — and I care about the whole
+            I build across web, mobile, and backend, and I care about the whole
             picture, not just my part of it. I want the product to make sense,
             the code to be readable, and the user to actually enjoy using it.
           </p>
