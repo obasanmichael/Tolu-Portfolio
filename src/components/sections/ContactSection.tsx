@@ -23,7 +23,7 @@ const quickLinks = [
   { label: "GitHub", href: "https://github.com/obasanmichael", icon: "github" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/tolu-obasan", icon: "linkedin" },
   { label: "X / Twitter", href: "https://x.com/MichaelObasan", icon: "twitter" },
-  { label: "Email", href: "mailto:hello@tolulopeobasan.dev", icon: "mail" },
+  { label: "Email", href: "mailto:obasantolu@gmail.com", icon: "mail" },
 ];
 
 export function ContactSection() {
@@ -203,10 +203,6 @@ export function ContactSection() {
                 Send via WhatsApp
                 <Send size={13} />
               </button>
-
-              <p className="text-center text-xs text-muted">
-                This will open WhatsApp with your message pre-filled.
-              </p>
             </form>
           )}
         </motion.div>

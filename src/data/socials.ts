@@ -26,7 +26,7 @@ export const socials = [
   },
   {
     label: "Email",
-    href: "mailto:hello@tolulopeobasan.dev",
+    href: "mailto:obasantolu@gmail.com",
     icon: "mail",
   },
 ];
