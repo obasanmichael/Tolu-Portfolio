@@ -50,7 +50,8 @@ export const projects: Project[] = [
       "FastAPI recommendation backend",
     ],
     links: {
-      github: "https://github.com/obasanmichael/travely-app",
+      webRepo: "https://github.com/obasanmichael/travely-app",
+      backendRepo: "https://github.com/obasanmichael/travely-backend.git",
       live: "https://travely-app-two.vercel.app/",
     },
   },
