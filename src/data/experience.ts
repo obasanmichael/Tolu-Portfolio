@@ -7,7 +7,7 @@ export const experiences: Experience[] = [
     company: "Lendsqr",
     type: "full-time",
     duration: "Present",
-    period: "Jan 2026 - Present",
+    period: "Nov 2025 - Present",
     summary:
       "I work on fixing bugs and keeping the platform stable in production. When something breaks, I'm one of the people who figures out what went wrong and gets it back on track.",
     responsibilities: [
