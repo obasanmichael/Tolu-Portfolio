@@ -62,7 +62,7 @@ export const projects: Project[] = [
     status: "live",
     isPrivate: false,
     description:
-      "A healthcare-focused electronic medical records web application. As Lead Frontend Engineer, I structured and implemented key frontend interfaces for managing patient, clinical, and operational workflows across the platform.",
+      "A healthcare-focused electronic medical records web application. As Lead Frontend Engineer, I structured and implemented key frontend interfaces and integrations for managing patient, clinical, and operational workflows across the platform.",
     stack: ["React", "TypeScript", "Tailwind CSS"],
     highlights: [
       "Led frontend architecture and implementation",
