@@ -9,12 +9,12 @@ export const experiences: Experience[] = [
     duration: "10 months",
     period: "Nov 2025 - Aug 2026",
     summary:
-      "I work on fixing bugs and keeping the platform stable in production. When something breaks, I'm one of the people who figures out what went wrong and gets it back on track.",
+      "I worked on fixing bugs and keeping the platform stable in production. When something broke, I'd figure out what went wrong and get it back on track.",
     responsibilities: [
-      "Find and fix UI bugs, broken states, bad API rendering, layout issues and backend bugs",
-      "Triage errors using Sentry and Grafana, then deploy fixes through staging to production",
-      "Look into recurring issues to understand root causes and stop them from happening again",
-      "Work on features and improvements to the platform",
+      "Found and fixed UI bugs, broken states, bad API rendering, layout issues and backend bugs",
+      "Triaged errors using Sentry and Grafana, then deployed fixes through staging to production",
+      "Looked into recurring issues to understand root causes and stop them from happening again",
+      "Worked on features and improvements to the platform",
     ],
     tools: ["Next", "Angular", "TypeScript", "Sentry", "Grafana", "Git", "Express", "Node"],
   },
