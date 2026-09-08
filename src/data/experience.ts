@@ -6,8 +6,8 @@ export const experiences: Experience[] = [
     role: "Fullstack & Site Reliability Engineer",
     company: "Lendsqr",
     type: "full-time",
-    duration: "Present",
-    period: "Nov 2025 - Present",
+    duration: "10 months",
+    period: "Nov 2025 - Aug 2026",
     summary:
       "I work on fixing bugs and keeping the platform stable in production. When something breaks, I'm one of the people who figures out what went wrong and gets it back on track.",
     responsibilities: [
