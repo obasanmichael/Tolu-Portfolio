@@ -21,6 +21,9 @@ export interface Project {
   };
   clientSites?: { name: string; url: string }[];
   isPrivate?: boolean;
+  /** Screenshot under /public, used where there's no walkthrough thumbnail. */
+  image?: string;
+  year?: string;
   detail?: ProjectDetail;
 }
 
@@ -29,6 +32,10 @@ export interface ProjectDetail {
   loomId: string;
   durationLabel: string;
   flow: string[];
+  /** Indexes into `flow` where code checks the work. */
+  checks?: number[];
+  /** Index into `flow` where a person signs off. */
+  approval?: number;
   stats: { value: string; label: string }[];
   decisions: { title: string; detail: string }[];
   access?: {

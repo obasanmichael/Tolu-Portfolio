@@ -1,89 +1,85 @@
 @import "tailwindcss";
 
-@theme {
-  /* Brand Colors */
-  --color-bg: #070907;
-  --color-surface: #0d120d;
-  --color-surface-alt: #111811;
-  --color-border: rgba(155, 239, 143, 0.14);
-  --color-border-hover: rgba(155, 239, 143, 0.32);
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-  /* Text */
-  --color-text: #f4f7f2;
-  --color-muted: #a5ada2;
-  --color-text-soft: #6f7a6d;
-
-  /* Brand Accent — mint green */
-  --color-accent: #9bef8f;
-  --color-accent-soft: rgba(155, 239, 143, 0.12);
-  --color-accent-glow: rgba(155, 239, 143, 0.25);
-
-  /* Typography */
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-body: var(--font-geist), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), "Fira Code", monospace;
-
-  /* Spacing & Layout */
-  --spacing-section: 6rem;
-
-  /* Transitions */
-  --transition-base: 200ms ease;
-  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --graphite: #5c5c5c;
+  --rule: #e6e6e6;
+  --surface: #f4f4f4;
+  --band: #000000;
+  --band-ink: #ffffff;
+  --band-graphite: #a3a3a3;
+  --band-rule: #2e2e2e;
+  --signal: #2b2bff;
+  color-scheme: light;
 }
 
-/* Base */
-html {
-  scroll-behavior: smooth;
+[data-theme="dark"] {
+  --paper: #000000;
+  --ink: #f2f2f2;
+  --graphite: #a3a3a3;
+  --rule: #262626;
+  --surface: #101010;
+  --band: #161616;
+  --band-ink: #f2f2f2;
+  --band-graphite: #a3a3a3;
+  --band-rule: #333333;
+  --signal: #8c8cff;
   color-scheme: dark;
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-rule: var(--rule);
+  --color-surface: var(--surface);
+  --color-band: var(--band);
+  --color-band-ink: var(--band-ink);
+  --color-band-graphite: var(--band-graphite);
+  --color-band-rule: var(--band-rule);
+  --color-signal: var(--signal);
+
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  --font-sans: var(--font-instrument), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #070907;
-  background-image:
-    radial-gradient(circle at 20% 10%, rgba(155, 239, 143, 0.06), transparent 28rem),
-    linear-gradient(180deg, #070907 0%, #090c09 100%);
-  color: #f4f7f2;
-  font-family: var(--font-geist), system-ui, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Keeps hash navigation (e.g. /#projects from a project page) clear of the fixed header */
+/* Keeps hash navigation (e.g. /#work from a project page) clear of the sticky header */
 section[id] {
-  scroll-margin-top: 5rem;
+  scroll-margin-top: 6rem;
 }
 
-/* Selection */
 ::selection {
-  background-color: rgba(155, 239, 143, 0.2);
-  color: #f4f7f2;
+  background-color: var(--signal);
+  color: #ffffff;
 }
 
-/* Focus visible */
 :focus-visible {
-  outline: 2px solid #9bef8f;
-  outline-offset: 2px;
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #070907;
-}
-::-webkit-scrollbar-thumb {
-  background: #111811;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 239, 143, 0.25);
-}
-
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
@@ -93,80 +89,38 @@ section[id] {
   }
 }
 
-/* Subtle background grid — kept very faint */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
+/* ── Type scale ─────────────────────────────────────── */
 
-/* Radial glow overlay */
-.bg-radial-glow {
-  background: radial-gradient(
-    ellipse 70% 40% at 50% -10%,
-    rgba(155, 239, 143, 0.06),
-    transparent
-  );
-}
-
-/* ── Typography utilities ────────────────────────────── */
-
-.hero-title {
+.type-hero {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7.5vw, 8rem);
-  line-height: 0.93;
-  letter-spacing: -0.06em;
+  font-size: clamp(2.5rem, 6vw, 5.75rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  font-variation-settings: "wdth" 88;
+  text-wrap: balance;
+}
+
+.type-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  font-variation-settings: "wdth" 90;
+  text-wrap: balance;
+}
+
+.type-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   font-weight: 600;
 }
 
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 4.5rem);
-  line-height: 0.96;
-  letter-spacing: -0.05em;
-  font-weight: 600;
-}
-
-.eyebrow {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.body-large {
-  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-  line-height: 1.7;
-}
-
-/* Text gradients */
-.text-gradient {
-  background: linear-gradient(135deg, #f4f7f2 0%, #a5ada2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-accent {
-  background: linear-gradient(135deg, #9bef8f 0%, #c3f7bb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Clip-path reveal animation */
-@keyframes reveal-up {
-  from {
-    clip-path: inset(100% 0 0 0);
-    opacity: 0;
-  }
-  to {
-    clip-path: inset(0% 0 0 0);
-    opacity: 1;
-  }
-}
-
-.reveal-up {
-  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.type-lead {
+  font-size: clamp(1.125rem, 1.4vw, 1.3rem);
+  line-height: 1.5;
+  text-wrap: pretty;
 }

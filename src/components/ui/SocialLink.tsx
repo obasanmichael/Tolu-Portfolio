@@ -74,12 +74,12 @@ export function SocialLink({
       rel="noopener noreferrer"
       aria-label={label}
       className={cn(
-        "inline-flex items-center gap-2.5 text-muted transition-colors duration-200 hover:text-accent",
-        showLabel ? "text-sm flex" : "inline-flex",
+        "items-center gap-3 text-graphite transition-colors duration-200 hover:text-ink",
+        showLabel ? "flex min-h-11 text-lg" : "inline-flex h-11 w-11 justify-center",
         className
       )}
     >
-      <Icon size={showLabel ? 16 : 18} />
+      <Icon size={showLabel ? 18 : 19} />
       {showLabel && <span>{label}</span>}
     </a>
   );

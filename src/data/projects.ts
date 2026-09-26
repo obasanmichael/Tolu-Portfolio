@@ -29,6 +29,8 @@ export const projects: Project[] = [
         "Human review",
         "Export",
       ],
+      checks: [1],
+      approval: 7,
       stats: [
         { value: "~$1.24", label: "per 10-lead run" },
         { value: "8", label: "agent tools" },
@@ -76,6 +78,7 @@ export const projects: Project[] = [
         "PDF",
         "Send to client",
       ],
+      approval: 3,
       stats: [
         { value: "1", label: "Claude call per proposal" },
         { value: "3", label: "roles" },
@@ -150,6 +153,8 @@ export const projects: Project[] = [
         "Approve",
         "Publish or schedule",
       ],
+      checks: [4],
+      approval: 7,
       stats: [
         { value: "3", label: "channels" },
         { value: "≤5", label: "revision rounds" },
@@ -193,6 +198,7 @@ export const projects: Project[] = [
         "Supabase",
         "Dashboard",
       ],
+      checks: [1],
       stats: [
         { value: "3", label: "data sources" },
         { value: "Daily", label: "auto-refresh" },
@@ -236,6 +242,7 @@ export const projects: Project[] = [
         "Duplicate check",
         "Log or flag",
       ],
+      checks: [1, 4, 5],
       stats: [
         { value: "3", label: "required fields" },
         { value: "0", label: "guessed values" },
@@ -297,9 +304,6 @@ export const projects: Project[] = [
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
-
-export const projectsByGroup = (group: Project["group"]) =>
-  projects.filter((p) => p.group === group && !p.featured);
 
 /** Projects with a detail page, in program-week order, for routing and prev/next. */
 export const detailProjects = projects

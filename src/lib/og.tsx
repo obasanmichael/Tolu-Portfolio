@@ -20,18 +20,15 @@ export function renderOgCard({ eyebrow, title, subtitle, chips = [] }: OgCardPro
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background:
-            "radial-gradient(circle at 15% 0%, rgba(155,239,143,0.16), transparent 55%), #070907",
-          color: "#f4f7f2",
+          background: "#ffffff",
+          color: "#000000",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
               fontSize: 24,
-              letterSpacing: 5,
-              textTransform: "uppercase",
-              color: "#9bef8f",
+              color: "#5c5c5c",
             }}
           >
             {eyebrow}
@@ -39,15 +36,15 @@ export function renderOgCard({ eyebrow, title, subtitle, chips = [] }: OgCardPro
           <div
             style={{
               marginTop: 28,
-              fontSize: 76,
+              fontSize: 92,
               fontWeight: 700,
-              lineHeight: 1.02,
-              letterSpacing: -2,
+              lineHeight: 0.98,
+              letterSpacing: -4,
             }}
           >
             {title}
           </div>
-          <div style={{ marginTop: 24, fontSize: 32, lineHeight: 1.35, color: "#a5ada2", maxWidth: 960 }}>
+          <div style={{ marginTop: 24, fontSize: 32, lineHeight: 1.35, color: "#000000", maxWidth: 960 }}>
             {subtitle}
           </div>
         </div>
@@ -59,9 +56,8 @@ export function renderOgCard({ eyebrow, title, subtitle, chips = [] }: OgCardPro
                 display: "flex",
                 padding: "10px 20px",
                 borderRadius: 999,
-                border: "1px solid rgba(155,239,143,0.32)",
-                background: "rgba(155,239,143,0.12)",
-                color: "#9bef8f",
+                border: "2px solid #000000",
+                color: "#000000",
                 fontSize: 22,
               }}
             >

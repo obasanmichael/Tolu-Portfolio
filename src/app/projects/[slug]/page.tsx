@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { CursorTrail } from "@/components/motion/CursorTrail";
-import { RevealText } from "@/components/motion/RevealText";
-import { StackPill } from "@/components/ui/StackPill";
 import { LoomEmbed } from "@/components/project/LoomEmbed";
 import { AccessPanel } from "@/components/project/AccessPanel";
+import { ScrollPipeline } from "@/components/pipeline/ScrollPipeline";
 import { detailProjects, getProject } from "@/data/projects";
+import { getWorkGroup } from "@/data/workGroups";
 import { getLoomMeta } from "@/lib/loom";
 
 export const dynamicParams = false;
@@ -34,14 +33,24 @@ export async function generateMetadata({
   };
 }
 
-function Block({ id, label, children }: { id?: string; label: string; children: React.ReactNode }) {
+function Legend() {
   return (
-    <RevealText delay={0.05}>
-      <section id={id} className="grid gap-4 border-t border-border py-10 lg:grid-cols-[200px_1fr] lg:gap-10">
-        <h2 className="eyebrow pt-1 text-accent/70">{label}</h2>
-        <div>{children}</div>
-      </section>
-    </RevealText>
+    <ul className="mt-6 space-y-3 text-base text-graphite">
+      <li className="flex items-center gap-3">
+        <span className="h-4 w-4 rounded-full border-2 border-ink bg-ink" aria-hidden="true" />
+        A step in the flow
+      </li>
+      <li className="flex items-center gap-3">
+        <span className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-ink bg-ink text-[9px] font-bold text-paper" aria-hidden="true">
+          ✓
+        </span>
+        Checked in code
+      </li>
+      <li className="flex items-center gap-3">
+        <span className="ml-0.5 h-3 w-3 rotate-45 bg-signal" aria-hidden="true" />
+        A person signs off
+      </li>
+    </ul>
   );
 }
 
@@ -52,6 +61,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
   const { detail } = project;
   const loom = await getLoomMeta(detail.loomId);
+  const group = getWorkGroup(project.group);
 
   const index = detailProjects.findIndex((p) => p.id === project.id);
   const prev = detailProjects[index - 1];
@@ -59,54 +69,33 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
   return (
     <>
-      <CursorTrail />
       <Navbar />
-      <main id="main-content" tabIndex={-1} className="px-4 pb-24 pt-28 sm:px-6 sm:pt-32 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-10 flex flex-wrap items-center justify-between gap-4">
-            <Link
-              href="/#projects"
-              className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
-            >
-              <ArrowLeft size={14} />
-              Back to work
-            </Link>
-            {project.program && (
-              <span className="inline-flex items-center rounded-full border border-border-hover bg-accent-soft px-3 py-1 text-xs font-medium text-accent">
-                {project.program.name} · Week {project.program.week}
-              </span>
+      <main id="main-content" tabIndex={-1}>
+        <header className="px-5 pb-14 pt-12 sm:px-8 md:pb-20 md:pt-16">
+          <div className="mx-auto max-w-7xl">
+            {group && (
+              <Link
+                href={`/work/${group.id}`}
+                className="inline-flex min-h-11 items-center gap-2 text-base text-graphite transition-colors hover:text-ink"
+              >
+                <ArrowLeft size={17} aria-hidden="true" />
+                {group.title}
+              </Link>
             )}
+            <p className="mt-8 text-lg text-graphite">
+              {project.type}
+              {project.program && `, built in week ${project.program.week} of ${project.program.name}`}
+            </p>
+            <h1 className="type-hero mt-4">{project.name}</h1>
+            <p className="type-lead mt-8 max-w-[44ch]">{project.tagline}</p>
+            <p className="mt-6 max-w-[70ch] text-lg text-graphite">
+              Built with {project.stack.join(", ")}
+            </p>
           </div>
+        </header>
 
-          <header className="mb-10">
-            <RevealText delay={0.05}>
-              <p className="eyebrow mb-4 text-accent">{project.type}</p>
-            </RevealText>
-            <RevealText delay={0.1}>
-              <h1 className="section-title text-text">{project.name}</h1>
-            </RevealText>
-            <RevealText delay={0.16}>
-              <p className="body-large mt-5 max-w-3xl text-muted">{project.tagline}</p>
-            </RevealText>
-            <RevealText delay={0.22}>
-              <div className="mt-6 flex flex-wrap items-center gap-1.5">
-                {project.stack.map((tech) => (
-                  <StackPill key={tech} name={tech} />
-                ))}
-                {project.links.live && (
-                  <a
-                    href="#try-it"
-                    className="ml-1 inline-flex items-center gap-1.5 rounded-full border border-border-hover bg-accent-soft px-3 py-1 text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-bg"
-                  >
-                    Try the live app
-                    <ArrowRight size={12} />
-                  </a>
-                )}
-              </div>
-            </RevealText>
-          </header>
-
-          <RevealText delay={0.28}>
+        <section aria-label="Walkthrough video" className="bg-band px-5 py-10 sm:px-8 md:py-16">
+          <div className="mx-auto max-w-5xl">
             <LoomEmbed
               loomId={detail.loomId}
               projectName={project.name}
@@ -115,81 +104,72 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               width={loom.width}
               height={loom.height}
             />
-          </RevealText>
-
-          <div className="mt-16">
-            <Block label="How it works">
-              <ol className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-                {detail.flow.map((step, i) => (
-                  <li key={step} className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text/90">
-                      <span className="font-mono text-[11px] text-accent/70">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      {step}
-                    </span>
-                    {i < detail.flow.length - 1 && (
-                      <ChevronRight size={14} className="hidden shrink-0 text-accent/40 sm:block" aria-hidden="true" />
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </Block>
-
-            <Block label="At a glance">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                {detail.stats.map((s) => (
-                  <div key={s.label} className="rounded-xl border border-border bg-surface p-5">
-                    <p
-                      className="text-3xl font-semibold tracking-tight text-accent"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {s.value}
-                    </p>
-                    <p className="mt-1 text-sm text-muted">{s.label}</p>
-                  </div>
-                ))}
-              </div>
-            </Block>
-
-            <Block label="Key decisions">
-              <div className="grid gap-3 md:grid-cols-2">
-                {detail.decisions.map((d) => (
-                  <div key={d.title} className="rounded-xl border border-border bg-surface p-5">
-                    <h3
-                      className="mb-1.5 text-base font-semibold text-text"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {d.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted">{d.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </Block>
-
-            {(project.links.live || detail.access) && (
-              <Block id="try-it" label="Try it">
-                <AccessPanel liveUrl={project.links.live} access={detail.access} />
-              </Block>
-            )}
           </div>
+        </section>
 
-          <nav
-            aria-label="More projects"
-            className="mt-6 grid gap-3 border-t border-border pt-10 sm:grid-cols-2"
-          >
-            {prev ? (
-              <Link
-                href={`/projects/${prev.id}`}
-                className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-border-hover"
+        <section className="px-5 py-16 sm:px-8 md:py-20">
+          <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-16">
+            <div className="md:sticky md:top-28 md:self-start">
+              <h2 className="type-title">How it works</h2>
+              <Legend />
+            </div>
+            <ScrollPipeline steps={detail.flow} checks={detail.checks} approval={detail.approval} />
+          </div>
+        </section>
+
+        <section aria-label="Key numbers" className="border-y border-rule px-5 sm:px-8">
+          <dl className="mx-auto grid max-w-7xl sm:grid-cols-3">
+            {detail.stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`py-10 sm:py-14 ${i > 0 ? "border-t border-rule sm:border-l sm:border-t-0 sm:pl-10" : ""}`}
               >
-                <span className="flex items-center gap-1.5 text-xs text-muted">
-                  <ArrowLeft size={12} /> Previous
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span className="block font-display text-5xl font-semibold leading-none tracking-tight md:text-6xl">
+                    {s.value}
+                  </span>
+                  <span className="mt-3 block text-lg text-graphite">{s.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section className="px-5 py-16 sm:px-8 md:py-20">
+          <div className="mx-auto max-w-7xl">
+            <h2 className="type-title max-w-[14ch]">Two decisions that shaped it</h2>
+            <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
+              {detail.decisions.map((d) => (
+                <div key={d.title}>
+                  <h3 className="font-display text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
+                    {d.title}
+                  </h3>
+                  <p className="mt-4 max-w-[48ch] text-base leading-relaxed text-graphite">{d.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {(project.links.live || detail.access) && (
+          <section id="try-it" className="bg-surface px-5 py-16 sm:px-8 md:py-20">
+            <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-16">
+              <h2 className="type-title">Try it yourself</h2>
+              <AccessPanel liveUrl={project.links.live} access={detail.access} />
+            </div>
+          </section>
+        )}
+
+        <nav aria-label="More projects" className="px-5 sm:px-8">
+          <div className="mx-auto grid max-w-7xl sm:grid-cols-2">
+            {prev ? (
+              <Link href={`/projects/${prev.id}`} className="group border-rule py-12 sm:border-r sm:pr-10">
+                <span className="flex items-center gap-2 text-base text-graphite">
+                  <ArrowLeft size={17} aria-hidden="true" />
+                  Previous
                 </span>
-                <span className="mt-1 block font-semibold text-text group-hover:text-accent" style={{ fontFamily: "var(--font-display)" }}>
-                  {prev.name}
-                </span>
+                <span className="type-heading mt-2 block group-hover:text-signal">{prev.name}</span>
               </Link>
             ) : (
               <span className="hidden sm:block" />
@@ -197,18 +177,17 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             {next && (
               <Link
                 href={`/projects/${next.id}`}
-                className="group rounded-xl border border-border bg-surface p-5 text-right transition-colors hover:border-border-hover"
+                className="group border-t border-rule py-12 text-right sm:border-t-0 sm:pl-10"
               >
-                <span className="flex items-center justify-end gap-1.5 text-xs text-muted">
-                  Next <ArrowRight size={12} />
+                <span className="flex items-center justify-end gap-2 text-base text-graphite">
+                  Next
+                  <ArrowRight size={17} aria-hidden="true" />
                 </span>
-                <span className="mt-1 block font-semibold text-text group-hover:text-accent" style={{ fontFamily: "var(--font-display)" }}>
-                  {next.name}
-                </span>
+                <span className="type-heading mt-2 block group-hover:text-signal">{next.name}</span>
               </Link>
             )}
-          </nav>
-        </div>
+          </div>
+        </nav>
       </main>
       <Footer />
     </>

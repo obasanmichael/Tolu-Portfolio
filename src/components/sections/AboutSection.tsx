@@ -21,10 +21,7 @@ export function AboutSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
         >
-          <SectionHeading
-            label="About"
-            title="Engineer who builds what matters."
-          />
+          <SectionHeading title="Engineer who builds what matters." />
           <p className="text-base leading-relaxed text-muted">
             I build across web, mobile, and backend, and I care about the whole
             picture, not just my part of it. I want the product to make sense,

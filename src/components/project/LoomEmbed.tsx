@@ -26,7 +26,7 @@ export function LoomEmbed({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl border border-border bg-surface-alt shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+      className="relative w-full overflow-hidden rounded-[14px] bg-black"
       style={{ aspectRatio: `${width} / ${height}` }}
     >
       {playing ? (
@@ -41,8 +41,8 @@ export function LoomEmbed({
         <button
           type="button"
           onClick={() => setPlaying(true)}
-          aria-label={`Play ${projectName} walkthrough, ${durationLabel}`}
-          className="group absolute inset-0 flex h-full w-full items-center justify-center"
+          aria-label={`Play the ${projectName} walkthrough, ${durationLabel}`}
+          className="group absolute inset-0 h-full w-full"
         >
           {thumbnailUrl && (
             <Image
@@ -50,17 +50,20 @@ export function LoomEmbed({
               alt=""
               fill
               priority
-              sizes="(min-width: 1152px) 1152px, 100vw"
-              className="object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-85"
+              sizes="(min-width: 1280px) 1216px, 100vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
             />
           )}
-          <span className="absolute inset-0 bg-linear-to-t from-bg/80 via-bg/20 to-transparent" />
-          <span className="relative flex flex-col items-center gap-3">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-bg shadow-[0_0_40px_rgba(155,239,143,0.45)] transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
-              <Play size={26} className="ml-1 fill-current" />
+          <span className="absolute inset-0 bg-black/35 transition-colors duration-300 group-hover:bg-black/25" />
+          <span className="absolute bottom-5 left-5 flex items-center gap-4 sm:bottom-8 sm:left-8">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-black transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+              <Play size={26} className="ml-1 fill-current" aria-hidden="true" />
             </span>
-            <span className="rounded-full border border-border bg-bg/70 px-3 py-1 text-xs font-medium text-text backdrop-blur">
-              Watch the walkthrough · {durationLabel}
+            <span className="text-left text-white">
+              <span className="block font-display text-xl font-semibold tracking-tight sm:text-2xl">
+                Watch the walkthrough
+              </span>
+              <span className="block text-base text-white/80">{durationLabel}, with voice-over</span>
             </span>
           </span>
         </button>

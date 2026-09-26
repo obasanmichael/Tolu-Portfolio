@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, Check, Copy, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Info } from "lucide-react";
+import { Disclosure } from "@/components/ui/Disclosure";
 import { type ProjectDetail } from "@/types";
 
-function CopyButton({ value, label }: { value: string; label: string }) {
+function CopyField({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -18,17 +19,24 @@ function CopyButton({ value, label }: { value: string; label: string }) {
   };
 
   return (
-    <button
-      type="button"
-      onClick={copy}
-      aria-label={`Copy ${label}`}
-      className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border text-muted transition-colors hover:border-border-hover hover:text-accent"
-    >
-      {copied ? <Check size={13} className="text-accent" /> : <Copy size={13} />}
-      <span className="sr-only" aria-live="polite">
-        {copied ? "Copied" : ""}
-      </span>
-    </button>
+    <div className="flex items-center justify-between gap-4 border-t border-rule py-3">
+      <div className="min-w-0">
+        <p className="text-sm text-graphite">{label}</p>
+        <p className="truncate text-lg font-medium">{value}</p>
+      </div>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label={`Copy ${label.toLowerCase()}`}
+        className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border-2 border-rule px-4 text-base font-medium transition-colors hover:border-ink"
+      >
+        {copied ? <Check size={16} className="text-signal" aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+        {copied ? "Copied" : "Copy"}
+        <span className="sr-only" aria-live="polite">
+          {copied ? `${label} copied` : ""}
+        </span>
+      </button>
+    </div>
   );
 }
 
@@ -38,51 +46,43 @@ interface AccessPanelProps {
 }
 
 export function AccessPanel({ liveUrl, access }: AccessPanelProps) {
-  if (!liveUrl && !access) return null;
-
   return (
-    <div className="rounded-2xl border border-border bg-surface p-6">
+    <div className="max-w-2xl">
+      {access?.notice && (
+        <p className="mb-8 flex gap-3 border-l-4 border-ink pl-5 text-base leading-relaxed">
+          <Info size={20} className="mt-1 shrink-0" aria-hidden="true" />
+          {access.notice}
+        </p>
+      )}
+
       {liveUrl && (
         <a
           href={liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-bg shadow-[0_0_24px_rgba(155,239,143,0.2)] transition-all duration-200 hover:bg-[#b8f5ae] hover:shadow-[0_0_36px_rgba(155,239,143,0.35)]"
+          className="inline-flex min-h-13 items-center gap-2 rounded-full bg-ink px-8 text-lg font-medium text-paper transition-opacity hover:opacity-85"
         >
           Open the live app
-          <ExternalLink size={14} />
+          <ArrowUpRight size={19} aria-hidden="true" />
         </a>
       )}
 
-      {access?.notice && (
-        <p className="mt-5 flex items-start gap-2.5 rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-sm leading-relaxed text-amber-200">
-          <AlertTriangle size={15} className="mt-0.5 shrink-0 text-amber-400" />
-          {access.notice}
-        </p>
-      )}
-
       {access?.credentials && (
-        <div className="mt-5">
-          <p className="eyebrow mb-3 text-accent/70">Demo login</p>
-          <ul className="space-y-2">
+        <Disclosure
+          className="mt-8 border-y border-rule"
+          summaryClassName="py-4"
+          summary={<span className="text-lg font-medium">Show the demo login</span>}
+        >
+          <div className="pb-5">
             {access.credentials.map((c) => (
-              <li
-                key={c.email}
-                className="grid gap-2 rounded-xl border border-border bg-surface-alt p-3 sm:grid-cols-[auto_1fr_1fr] sm:items-center sm:gap-4"
-              >
-                <span className="text-xs font-medium text-accent">{c.role}</span>
-                <span className="flex min-w-0 items-center justify-between gap-2">
-                  <code className="truncate font-mono text-xs text-text/90">{c.email}</code>
-                  <CopyButton value={c.email} label={`${c.role} email`} />
-                </span>
-                <span className="flex min-w-0 items-center justify-between gap-2">
-                  <code className="truncate font-mono text-xs text-text/90">{c.password}</code>
-                  <CopyButton value={c.password} label={`${c.role} password`} />
-                </span>
-              </li>
+              <div key={c.email}>
+                <p className="pb-2 pt-1 text-base text-graphite">{c.role} account, shared with visitors</p>
+                <CopyField label="Email" value={c.email} />
+                <CopyField label="Password" value={c.password} />
+              </div>
             ))}
-          </ul>
-        </div>
+          </div>
+        </Disclosure>
       )}
     </div>
   );

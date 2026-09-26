@@ -1,70 +1,56 @@
-import { Section } from "@/components/layout/Section";
-import { RevealText } from "@/components/motion/RevealText";
-import { ProjectCard } from "@/components/ui/ProjectCard";
-import { featuredProjects, projectsByGroup } from "@/data/projects";
-import { type ProjectGroup } from "@/types";
-
-const groups: { id: ProjectGroup; label: string; note: string }[] = [
-  {
-    id: "ai-automation",
-    label: "AI automation",
-    note: "Production-style builds from Koya Talent's AI Automation Developer program.",
-  },
-  {
-    id: "products",
-    label: "Products & client work",
-    note: "Web, mobile and client builds.",
-  },
-];
-
-function GroupHeading({ label, note }: { label: string; note: string }) {
-  return (
-    <RevealText delay={0.05}>
-      <div className="mb-6 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-        <h3
-          className="text-xl font-semibold tracking-tight text-text"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {label}
-        </h3>
-        <p className="text-sm text-muted">{note}</p>
-      </div>
-    </RevealText>
-  );
-}
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { Section, SectionHeading } from "@/components/layout/Section";
+import { ProjectRow } from "@/components/work/ProjectRow";
+import { featuredProjects } from "@/data/projects";
+import { groupProjects, workGroups } from "@/data/workGroups";
 
 export function ProjectsSection() {
   return (
-    <Section id="projects">
-      <div className="mb-12">
-        <RevealText delay={0.05}>
-          <p className="eyebrow mb-4 text-accent">Work</p>
-        </RevealText>
-        <RevealText delay={0.12}>
-          <h2 className="section-title text-text">Selected work.</h2>
-        </RevealText>
-      </div>
+    <Section id="work">
+      <SectionHeading
+        title="Selected work"
+        intro="Three projects that show the range: two AI systems with human sign-off, and a web and mobile product."
+      />
 
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="border-b border-rule">
         {featuredProjects.map((project, i) => (
-          <ProjectCard key={project.id} project={project} index={i} featured />
+          <ProjectRow key={project.id} project={project} priority={i === 0} />
         ))}
       </div>
 
-      {groups.map((group) => {
-        const items = projectsByGroup(group.id);
-        if (items.length === 0) return null;
-        return (
-          <div key={group.id} className="mt-20">
-            <GroupHeading label={group.label} note={group.note} />
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
-            </div>
-          </div>
-        );
-      })}
+      <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
+        {workGroups.map((group) => {
+          const items = groupProjects(group.id);
+          return (
+            <Link
+              key={group.id}
+              href={`/work/${group.id}`}
+              className="group flex min-h-72 flex-col justify-between rounded-[14px] bg-band p-8 text-band-ink transition-transform duration-300 hover:-translate-y-1 sm:p-10"
+            >
+              <div className="flex items-start justify-between gap-6">
+                <h3 className="type-heading max-w-[12ch]">{group.title}</h3>
+                <span className="font-display text-6xl font-semibold leading-none tracking-tight sm:text-7xl">
+                  {items.length}
+                </span>
+              </div>
+              <div>
+                <p className="mt-8 text-base text-band-graphite">
+                  {items.map((p) => p.name).join(", ")}
+                </p>
+                <p className="mt-6 inline-flex items-center gap-2 text-lg font-medium">
+                  View all {items.length} projects
+                  <ArrowUpRight
+                    size={20}
+                    aria-hidden="true"
+                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </Section>
   );
 }
