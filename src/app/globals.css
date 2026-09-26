@@ -49,6 +49,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Keeps hash navigation (e.g. /#projects from a project page) clear of the fixed header */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
 /* Selection */
 ::selection {
   background-color: rgba(155, 239, 143, 0.2);

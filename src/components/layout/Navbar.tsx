@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SocialLink } from "@/components/ui/SocialLink";
@@ -184,6 +185,8 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const prefersReduced = useReducedMotion();
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -214,6 +217,11 @@ export function Navbar() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
+    // Section ids only exist on the home page; elsewhere, navigate there with the hash.
+    if (pathname !== "/") {
+      router.push(`/${href}`);
+      return;
+    }
     setActiveSection(href.slice(1));
     const el = document.getElementById(href.slice(1));
     if (el) {
