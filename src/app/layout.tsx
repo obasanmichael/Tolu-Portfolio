@@ -16,14 +16,12 @@ const instrument = Instrument_Sans({
   display: "swap",
 });
 
-// Runs before first paint so a stored or system dark preference never flashes light.
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()`;
+// Light is the default for every first visit. A visitor who picks dark with the toggle
+// keeps it, and this runs before first paint so that choice never flashes light.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=t==="dark"?"dark":"light"}catch(e){}})()`;
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  themeColor: "#ffffff",
 };
 
 const TITLE = "Tolulope Obasan | Full-Stack & AI Automation Engineer";
