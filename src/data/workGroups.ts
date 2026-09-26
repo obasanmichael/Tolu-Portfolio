@@ -11,7 +11,8 @@ export const workGroups: { id: ProjectGroup; title: string; blurb: string }[] = 
   {
     id: "products",
     title: "Product engineering",
-    blurb: "Web and mobile products, a healthcare platform I led the frontend on, and websites for service businesses.",
+    blurb:
+      "Web and mobile products, including a dating app, a healthcare platform I led the frontend on, and websites for service businesses.",
   },
 ];
 

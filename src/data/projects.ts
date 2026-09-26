@@ -261,6 +261,18 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "whossy",
+    name: "Whossy",
+    type: "Dating app, web and mobile",
+    group: "products",
+    status: "in-development",
+    tagline:
+      "A dating app for finding people nearby, matching and chatting, on the web and on your phone.",
+    chips: ["Match by interests and distance", "Pay only when someone replies", "Selfie checks for real profiles"],
+    stack: ["Flutter", "React", "TypeScript", "Firebase"],
+    links: { live: "https://www.whossy.com/" },
+  },
+  {
     id: "travely",
     name: "Travely",
     type: "Travel Recommendation App",
