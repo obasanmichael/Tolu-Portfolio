@@ -2,6 +2,22 @@ import { type Experience } from "@/types";
 
 export const experiences: Experience[] = [
   {
+    id: "koya-talent",
+    role: "AI Automation Developer, Cohort 3",
+    company: "Koya Talent",
+    type: "program",
+    duration: "Ongoing",
+    period: "Aug 2026 - Present",
+    summary:
+      "A six-week program of production-style client builds, each shipped with a live app, testing evidence and a walkthrough.",
+    responsibilities: [
+      "Built AI agents and approval workflows with Claude Sonnet and Haiku",
+      "Enforced limits, approvals and data rules in code rather than prompts",
+      "Shipped live systems with failure handling and cost tracking",
+    ],
+    tools: ["Claude API", "Claude Agent SDK", "n8n", "Supabase", "Next.js"],
+  },
+  {
     id: "lendsqr-sre",
     role: "Fullstack & Site Reliability Engineer",
     company: "Lendsqr",

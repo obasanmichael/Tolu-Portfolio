@@ -9,6 +9,19 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
+    label: "AI & Automation",
+    items: [
+      { name: "Claude API" },
+      { name: "Claude Agent SDK" },
+      { name: "n8n" },
+      { name: "Apify" },
+      { name: "Firecrawl" },
+      { name: "Prompt Engineering" },
+      { name: "Resend" },
+      { name: "GitHub Actions" },
+    ],
+  },
+  {
     label: "Frontend",
     items: [
       { name: "React" },

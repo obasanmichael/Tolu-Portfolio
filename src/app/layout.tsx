@@ -20,13 +20,22 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const TITLE = "Tolulope Obasan | Full-Stack & AI Automation Engineer";
+const DESCRIPTION =
+  "Portfolio of Tolulope Obasan, a full-stack and AI automation engineer building web and mobile products, and AI systems with Claude where code enforces the rules and a person signs off.";
+
 export const metadata: Metadata = {
-  title: "Tolulope Obasan | Full-Stack Engineer",
-  description:
-    "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "Tolulope Obasan",
     "Full-Stack Engineer",
+    "AI Automation Engineer",
+    "AI Agents",
+    "Claude",
+    "Claude Agent SDK",
+    "n8n",
+    "Workflow Automation",
     "React",
     "Next.js",
     "TypeScript",
@@ -42,25 +51,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://tolulopeobasan.dev",
-    title: "Tolulope Obasan | Full-Stack Engineer",
-    description:
-      "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
+    title: TITLE,
+    description: DESCRIPTION,
     siteName: "Tolulope Obasan",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tolulope Obasan | Full-Stack Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tolulope Obasan | Full-Stack Engineer",
-    description:
-      "Full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
-    images: ["/og-image.png"],
+    title: TITLE,
+    description: DESCRIPTION,
   },
   robots: {
     index: true,

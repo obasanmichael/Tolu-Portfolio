@@ -6,15 +6,24 @@ import { SocialLink } from "@/components/ui/SocialLink";
 import { TypingText } from "@/components/motion/TypingText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { socials } from "@/data/socials";
+import { projects } from "@/data/projects";
 
 const TYPING_PHRASES = [
-  "building JobTrackr.",
-  "designing polished interfaces.",
-  "shipping reliable products.",
-  "connecting frontend to real business workflows.",
+  "building AI agents with guardrails.",
+  "automating real business workflows.",
+  "shipping full-stack products.",
+  "keeping humans in the approval loop.",
 ];
 
-const FOCUS_ITEMS = ["JobTrackr", "React Native", "NestJS", "Product engineering"];
+const FOCUS_ITEMS = ["AI agents", "Claude API", "n8n", "Next.js", "React Native"];
+
+const aiCount = projects.filter((p) => p.group === "ai-automation").length;
+
+const PROOF_POINTS = [
+  `${aiCount} AI automations shipped`,
+  "Claude Sonnet & Haiku",
+  "Human-approved, code-enforced",
+];
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -58,7 +67,7 @@ export function HeroSection() {
           {...fadeUp(0.05)}
           className="eyebrow mb-8 text-accent"
         >
-          Tolulope Obasan · Full-stack Engineer
+          Tolulope Obasan · Full-stack &amp; AI Automation Engineer
         </motion.p>
 
         {/* Main headline */}
@@ -66,10 +75,11 @@ export function HeroSection() {
           {...fadeUp(0.12)}
           className="hero-title max-w-5xl text-text"
         >
-          I build useful software for{" "}
-          <span className="text-gradient-accent">web, mobile,</span>
+          I build products
           <br />
-          and real operations.
+          <span className="text-gradient-accent">&amp; AI automations</span>
+          <br />
+          you can trust.
         </motion.h1>
 
         {/* Typing line */}
@@ -86,9 +96,25 @@ export function HeroSection() {
           {...fadeUp(0.34)}
           className="body-large mt-6 max-w-2xl text-muted"
         >
-          Full-stack engineer focused on polished interfaces, backend APIs,
-          mobile products, and reliable software delivery.
+          Web and mobile products, plus AI systems where the model proposes,
+          code enforces the rules, and a person signs off.
         </motion.p>
+
+        {/* Proof points */}
+        <motion.ul
+          {...fadeUp(0.4)}
+          className="mt-6 flex flex-wrap gap-2"
+        >
+          {PROOF_POINTS.map((point) => (
+            <li
+              key={point}
+              className="inline-flex items-center gap-2 rounded-full border border-border-hover bg-accent-soft px-3.5 py-1.5 text-xs font-medium text-accent"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              {point}
+            </li>
+          ))}
+        </motion.ul>
 
         {/* CTAs */}
         <motion.div

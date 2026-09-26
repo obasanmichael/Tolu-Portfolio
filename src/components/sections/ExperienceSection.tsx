@@ -19,6 +19,7 @@ const typeLabels: Record<string, string> = {
   contract: "Contract",
   freelance: "Freelance",
   "part-time": "Part-time",
+  program: "Training program",
 };
 
 /* ─── Each card has its own scroll tracker for reversibility ──── */
@@ -29,7 +30,7 @@ function ExperienceCard({
 }: {
   exp: Experience;
   index: number;
-  dotOpacity: MotionValue<number>;
+  dotOpacity?: MotionValue<number>;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -45,7 +46,7 @@ function ExperienceCard({
     <div ref={cardRef} className="relative pl-10 lg:pl-20">
       {/* Timeline dot — fades in as line draws past it */}
       <motion.div
-        style={{ opacity: dotOpacity }}
+        style={dotOpacity ? { opacity: dotOpacity } : undefined}
         className={cn(
           "absolute left-[11px] top-6 h-2.5 w-2.5 rounded-full border-2 border-bg lg:left-[27px]",
           index === 0
@@ -113,6 +114,21 @@ function ExperienceCard({
   );
 }
 
+/* Each dot lights up as the drawing line reaches its entry, however many entries there are. */
+function TimelineEntry({
+  exp,
+  index,
+  progress,
+}: {
+  exp: Experience;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const start = 0.08 + (index / experiences.length) * 0.84;
+  const dotOpacity = useTransform(progress, [start, start + 0.18], [0, 1]);
+  return <ExperienceCard exp={exp} index={index} dotOpacity={dotOpacity} />;
+}
+
 /* ─── Section ──────────────────────────────────────────────────── */
 export function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -131,14 +147,6 @@ export function ExperienceSection() {
   /* Line draws from 0 → 100% height */
   const lineScaleY = useTransform(sectionProgress, [0, 1], [0, 1]);
 
-  /*
-   * Dot opacities — each dot lights up when the line reaches it.
-   * With 2 entries spaced equally, first dot at ~10%, second at ~55%.
-   */
-  const dot0Opacity = useTransform(sectionProgress, [0.08, 0.28], [0, 1]);
-  const dot1Opacity = useTransform(sectionProgress, [0.5, 0.68], [0, 1]);
-  const dotOpacities = [dot0Opacity, dot1Opacity];
-
   if (prefersReduced) {
     return (
       <Section id="experience">
@@ -146,12 +154,7 @@ export function ExperienceSection() {
         <div className="relative space-y-8">
           <div className="absolute left-4 top-0 h-full w-px bg-border lg:left-8" />
           {experiences.map((exp, i) => (
-            <ExperienceCard
-              key={exp.id}
-              exp={exp}
-              index={i}
-              dotOpacity={dotOpacities[i] ?? dotOpacities[0]}
-            />
+            <ExperienceCard key={exp.id} exp={exp} index={i} />
           ))}
         </div>
       </Section>
@@ -178,11 +181,11 @@ export function ExperienceSection() {
 
         <div className="space-y-8">
           {experiences.map((exp, i) => (
-            <ExperienceCard
+            <TimelineEntry
               key={exp.id}
               exp={exp}
               index={i}
-              dotOpacity={dotOpacities[i] ?? dotOpacities[0]}
+              progress={sectionProgress}
             />
           ))}
         </div>

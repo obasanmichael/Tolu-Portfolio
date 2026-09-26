@@ -25,6 +25,7 @@ const BG_COLORS = [
   "#051310", // 03 — dark teal
   "#090d07", // 04 — dark olive
   "#0d1006", // 05 — deep moss
+  "#070c0b", // 06 — deep slate
 ];
 
 /* ─── Shared scroll-driven layout (mobile + desktop) ─── */
@@ -37,10 +38,11 @@ function ScrollLayout() {
     offset: ["start start", "end end"],
   });
 
+  const colors = BG_COLORS.slice(0, principles.length);
   const bgColor = useTransform(
     scrollYProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    BG_COLORS
+    colors.map((_, i) => i / (colors.length - 1)),
+    colors
   );
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
