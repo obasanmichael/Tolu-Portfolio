@@ -1,37 +1,39 @@
-import Image from "next/image";
-import { Play } from "lucide-react";
+import { ViewTransition } from "react";
 import { getLoomMeta } from "@/lib/loom";
+import { ThumbMedia } from "./ThumbMedia";
+import { CursorWipe } from "@/components/motion/CursorWipe";
 import { type Project } from "@/types";
 
 /** Walkthrough still for projects with a video; a typographic tile for the rest. */
 export async function ProjectThumb({ project, priority = false }: { project: Project; priority?: boolean }) {
-  const thumb = project.detail ? (await getLoomMeta(project.detail.loomId)).thumbnailUrl : null;
+  const loom = project.detail ? await getLoomMeta(project.detail.loomId) : null;
 
-  return (
+  const frame = loom?.thumbnailUrl ? (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-band">
-      {thumb ? (
-        <>
-          <Image
-            src={thumb}
-            alt=""
-            fill
-            priority={priority}
-            sizes="(min-width: 1024px) 560px, 100vw"
-            className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.025]"
-          />
-          <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-black/80 px-3.5 py-2 text-sm font-medium text-white backdrop-blur">
-            <Play size={13} className="fill-current" aria-hidden="true" />
-            {project.detail?.durationLabel} walkthrough
-          </span>
-        </>
-      ) : (
-        <div className="flex h-full flex-col justify-end p-6 sm:p-8">
-          <span className="font-display text-4xl font-semibold leading-none tracking-tight text-band-ink sm:text-5xl">
-            {project.name}
-          </span>
-          <span className="mt-3 text-base text-band-graphite">{project.type}</span>
-        </div>
-      )}
+      <ThumbMedia
+        still={loom.thumbnailUrl}
+        preview={loom.previewUrl}
+        durationLabel={project.detail?.durationLabel}
+        priority={priority}
+      />
     </div>
+  ) : (
+    <CursorWipe className="flex aspect-[16/10] w-full flex-col justify-end rounded-[14px] p-6 sm:p-8">
+      <span className="font-display text-4xl font-semibold leading-none tracking-tight transition-transform duration-500 group-hover/wipe:-translate-y-1 sm:text-5xl">
+        {project.name}
+      </span>
+      <span className="mt-3 text-base text-band-graphite transition-colors duration-500 group-hover/wipe:text-graphite">
+        {project.type}
+      </span>
+    </CursorWipe>
+  );
+
+  if (!project.detail) return frame;
+
+  // Same name as the project page's video, so clicking through morphs one into the other.
+  return (
+    <ViewTransition name={`project-media-${project.id}`} share="morph" default="none">
+      {frame}
+    </ViewTransition>
   );
 }

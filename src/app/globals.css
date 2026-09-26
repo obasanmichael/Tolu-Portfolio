@@ -124,3 +124,104 @@ section[id] {
   line-height: 1.5;
   text-wrap: pretty;
 }
+
+/* ── Load choreography ─────────────────────────────── */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes mask-up {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+.mask-word {
+  animation: mask-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rise-in {
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ── View transitions ──────────────────────────────── */
+
+/* A project thumbnail morphs into its page's video (and back). */
+::view-transition-group(.morph) {
+  animation-duration: 550ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  35% {
+    filter: blur(4px);
+  }
+}
+
+/* The rest of the page crossfades quickly underneath the morph. */
+::view-transition-old(root) {
+  animation: 180ms ease-in both vt-fade-out;
+}
+::view-transition-new(root) {
+  animation: 320ms ease-out 120ms both vt-fade-in;
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* The header is the fixed reference point, so it never animates. */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Theme switch: the new theme is revealed by a growing circle (see ThemeToggle), so the
+   default page crossfade and the anchored header are both switched off for it. */
+.theme-vt::view-transition-old(root),
+.theme-vt::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.theme-vt header {
+  view-transition-name: none !important;
+}

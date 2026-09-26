@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -10,6 +11,9 @@ import { ScrollPipeline } from "@/components/pipeline/ScrollPipeline";
 import { detailProjects, getProject } from "@/data/projects";
 import { getWorkGroup } from "@/data/workGroups";
 import { getLoomMeta } from "@/lib/loom";
+import { MaskReveal } from "@/components/motion/MaskReveal";
+import { CountUp } from "@/components/motion/CountUp";
+import { ScrollGrow } from "@/components/motion/ScrollGrow";
 
 export const dynamicParams = false;
 
@@ -86,9 +90,9 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               {project.type}
               {project.program && `, built in week ${project.program.week} of ${project.program.name}`}
             </p>
-            <h1 className="type-hero mt-4">{project.name}</h1>
-            <p className="type-lead mt-8 max-w-[44ch]">{project.tagline}</p>
-            <p className="mt-6 max-w-[70ch] text-lg text-graphite">
+            <MaskReveal as="h1" trigger="mount" text={project.name} className="type-hero mt-4" />
+            <p className="rise-in type-lead mt-8 max-w-[44ch]" style={{ "--delay": "450ms" } as React.CSSProperties}>{project.tagline}</p>
+            <p className="rise-in mt-6 max-w-[70ch] text-lg text-graphite" style={{ "--delay": "600ms" } as React.CSSProperties}>
               Built with {project.stack.join(", ")}
             </p>
           </div>
@@ -96,21 +100,27 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         <section aria-label="Walkthrough video" className="bg-band px-5 py-10 sm:px-8 md:py-16">
           <div className="mx-auto max-w-5xl">
-            <LoomEmbed
-              loomId={detail.loomId}
-              projectName={project.name}
-              durationLabel={detail.durationLabel}
-              thumbnailUrl={loom.thumbnailUrl}
-              width={loom.width}
-              height={loom.height}
-            />
+            <ScrollGrow>
+              <ViewTransition name={`project-media-${project.id}`} share="morph" default="none">
+                <div>
+                  <LoomEmbed
+                    loomId={detail.loomId}
+                    projectName={project.name}
+                    durationLabel={detail.durationLabel}
+                    thumbnailUrl={loom.thumbnailUrl}
+                    width={loom.width}
+                    height={loom.height}
+                  />
+                </div>
+              </ViewTransition>
+            </ScrollGrow>
           </div>
         </section>
 
         <section className="px-5 py-16 sm:px-8 md:py-20">
           <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-16">
             <div className="md:sticky md:top-28 md:self-start">
-              <h2 className="type-title">How it works</h2>
+              <MaskReveal text="How it works" className="type-title" />
               <Legend />
             </div>
             <ScrollPipeline steps={detail.flow} checks={detail.checks} approval={detail.approval} />
@@ -126,9 +136,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               >
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
-                  <span className="block font-display text-5xl font-semibold leading-none tracking-tight md:text-6xl">
-                    {s.value}
-                  </span>
+                  <CountUp
+                    value={s.value}
+                    className="block font-display text-5xl font-semibold leading-none tracking-tight md:text-6xl"
+                  />
                   <span className="mt-3 block text-lg text-graphite">{s.label}</span>
                 </dd>
               </div>
@@ -138,7 +149,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
         <section className="px-5 py-16 sm:px-8 md:py-20">
           <div className="mx-auto max-w-7xl">
-            <h2 className="type-title max-w-[14ch]">Two decisions that shaped it</h2>
+            <MaskReveal text="Two decisions that shaped it" className="type-title max-w-[14ch]" />
             <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
               {detail.decisions.map((d) => (
                 <div key={d.title}>
@@ -155,7 +166,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         {(project.links.live || detail.access) && (
           <section id="try-it" className="bg-surface px-5 py-16 sm:px-8 md:py-20">
             <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-16">
-              <h2 className="type-title">Try it yourself</h2>
+              <MaskReveal text="Try it yourself" className="type-title" />
               <AccessPanel liveUrl={project.links.live} access={detail.access} />
             </div>
           </section>

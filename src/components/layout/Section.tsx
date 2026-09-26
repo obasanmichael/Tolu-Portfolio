@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { MaskReveal } from "@/components/motion/MaskReveal";
 
 interface SectionProps {
   id?: string;
@@ -24,7 +25,7 @@ interface SectionHeadingProps {
 export function SectionHeading({ title, intro, className }: SectionHeadingProps) {
   return (
     <div className={cn("mb-10 md:mb-12", className)}>
-      <h2 className="type-title max-w-[16ch]">{title}</h2>
+      <MaskReveal text={title} className="type-title max-w-[16ch]" />
       {intro && <p className="type-lead mt-6 max-w-[48ch] text-graphite">{intro}</p>}
     </div>
   );

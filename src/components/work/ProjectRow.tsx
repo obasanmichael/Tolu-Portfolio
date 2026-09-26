@@ -26,7 +26,31 @@ export function ProjectRow({ project, priority = false }: { project: Project; pr
 
   return (
     <article className="group relative grid gap-6 border-t border-rule py-8 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-12 md:py-10">
-      <ProjectThumb project={project} priority={priority} />
+      {/* The thumbnail sits above the row's stretched link so it gets its own hover
+          (previews, the cursor wipe); it links to the same place, hidden from assistive
+          tech because the title link already announces it. */}
+      {href ? (
+        project.detail ? (
+          <Link href={href} tabIndex={-1} aria-hidden="true" className="relative z-10 block rounded-[14px]">
+            <ProjectThumb project={project} priority={priority} />
+          </Link>
+        ) : (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="relative z-10 block rounded-[14px]"
+          >
+            <ProjectThumb project={project} priority={priority} />
+          </a>
+        )
+      ) : (
+        <div className="relative z-10">
+          <ProjectThumb project={project} priority={priority} />
+        </div>
+      )}
 
       <div className="flex flex-col md:py-2">
         <p className="text-base text-graphite">{contextLine(project)}</p>

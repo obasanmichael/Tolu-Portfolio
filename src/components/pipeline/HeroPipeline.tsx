@@ -3,33 +3,30 @@
 import { useEffect } from "react";
 import { animate, useMotionValue, useReducedMotion } from "motion/react";
 import { Pipeline } from "./Pipeline";
+import { journey, journeyStamp } from "@/data/journey";
 
-const STEPS = ["Request", "Model drafts", "Code checks", "You approve", "Shipped"];
-const CHECK = 2;
-const APPROVAL = 3;
+const LABELS = journey.map((j) => j.label);
+const DETAILS = journey.map((j) => ({ title: j.title, sub: j.sub }));
+const NOTES = journey.map((j) => j.note);
+const NOW = journey.length - 1;
 
-/** The site's one page-load moment: work travels the line and waits at each gate. */
+/** The site's one page-load moment: the line travels through my career and stops at "Now". */
 export function HeroPipeline() {
   const reduce = useReducedMotion();
   const progress = useMotionValue(reduce ? 1 : 0);
+
   useEffect(() => {
-    const at = (i: number) => i / (STEPS.length - 1);
     if (reduce) {
       progress.set(1);
       return;
     }
     let cancelled = false;
     const run = async () => {
-      await new Promise((r) => setTimeout(r, 700));
-      const legs: [number, number, number][] = [
-        [at(CHECK), 1.1, 450],
-        [at(APPROVAL), 0.55, 750],
-        [1, 0.55, 0],
-      ];
-      for (const [to, duration, pause] of legs) {
+      await new Promise((r) => setTimeout(r, 1500));
+      for (let i = 1; i <= NOW; i++) {
         if (cancelled) return;
-        await animate(progress, to, { duration, ease: [0.45, 0, 0.2, 1] });
-        await new Promise((r) => setTimeout(r, pause));
+        await animate(progress, i / NOW, { duration: 0.7, ease: [0.45, 0, 0.2, 1] });
+        await new Promise((r) => setTimeout(r, i === NOW ? 0 : 260));
       }
     };
     run();
@@ -38,13 +35,23 @@ export function HeroPipeline() {
     };
   }, [reduce, progress]);
 
+  const shared = {
+    steps: LABELS,
+    details: DETAILS,
+    notes: NOTES,
+    approval: NOW,
+    stamp: journeyStamp,
+    progress,
+  };
+
   return (
-    <div aria-label="How my systems work: request, model drafts, code checks, you approve, shipped" role="img">
+    <div>
+      <h2 className="sr-only">My path so far</h2>
       <div className="hidden md:block">
-        <Pipeline steps={STEPS} checks={[CHECK]} approval={APPROVAL} progress={progress} orientation="horizontal" />
+        <Pipeline {...shared} orientation="horizontal" />
       </div>
       <div className="md:hidden">
-        <Pipeline steps={STEPS} checks={[CHECK]} approval={APPROVAL} progress={progress} orientation="vertical" />
+        <Pipeline {...shared} orientation="vertical" />
       </div>
     </div>
   );
