@@ -1,134 +1,55 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { Download } from "lucide-react";
 import { SocialLink } from "@/components/ui/SocialLink";
-import { TypingText } from "@/components/motion/TypingText";
-import { MagneticButton } from "@/components/motion/MagneticButton";
+import { HeroPipeline } from "@/components/pipeline/HeroPipeline";
 import { socials } from "@/data/socials";
-
-const TYPING_PHRASES = [
-  "building JobTrackr.",
-  "designing polished interfaces.",
-  "shipping reliable products.",
-  "connecting frontend to real business workflows.",
-];
-
-const FOCUS_ITEMS = ["JobTrackr", "React Native", "NestJS", "Product engineering"];
-
-const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+import { MaskReveal } from "@/components/motion/MaskReveal";
 
 export function HeroSection() {
-  const prefersReduced = useReducedMotion();
-
-  const fadeUp = (delay = 0) => ({
-    initial: prefersReduced ? false : { opacity: 0, y: 28 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, delay, ease: EASE },
-  });
-
-  const handleScrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - 80,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <section
-      className="relative overflow-hidden px-4 pt-28 pb-20 sm:px-6 sm:pt-32 sm:pb-24 md:pt-40 md:pb-28 lg:px-8"
-      aria-label="Hero"
-    >
-      {/* Very subtle grid */}
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" aria-hidden="true" />
-      {/* Radial glow at top */}
-      <div className="pointer-events-none absolute inset-0 bg-radial-glow" aria-hidden="true" />
-      {/* Bottom fade */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-        style={{ background: "linear-gradient(to top, #070907, transparent)" }}
-        aria-hidden="true"
-      />
+    <section aria-label="Introduction" className="px-5 pb-8 pt-16 sm:px-8 md:pb-12 md:pt-24">
+      <div className="mx-auto max-w-7xl">
+        <p className="rise-in text-lg text-graphite">Full-stack &amp; AI automation engineer</p>
 
-      <div className="relative mx-auto max-w-6xl">
-        {/* Eyebrow */}
-        <motion.p
-          {...fadeUp(0.05)}
-          className="eyebrow mb-8 text-accent"
-        >
-          Tolulope Obasan · Full-stack Engineer
-        </motion.p>
+        <MaskReveal
+          as="h1"
+          trigger="mount"
+          delay={0.1}
+          stagger={0.055}
+          text="I build products and AI systems that ask before they act."
+          className="type-hero mt-6 max-w-[17ch]"
+        />
 
-        {/* Main headline */}
-        <motion.h1
-          {...fadeUp(0.12)}
-          className="hero-title max-w-5xl text-text"
-        >
-          I build useful software for{" "}
-          <span className="text-gradient-accent">web, mobile,</span>
-          <br />
-          and real operations.
-        </motion.h1>
+        <p className="rise-in type-lead mt-8 max-w-[46ch] text-graphite" style={{ "--delay": "650ms" } as React.CSSProperties}>
+          Web and mobile products, plus automations where Claude does the work, code
+          enforces the rules, and a person signs off.
+        </p>
 
-        {/* Typing line */}
-        <motion.div
-          {...fadeUp(0.24)}
-          className="mt-8 text-lg text-muted sm:text-xl"
-        >
-          Currently{" "}
-          <TypingText phrases={TYPING_PHRASES} />
-        </motion.div>
-
-        {/* Subtext */}
-        <motion.p
-          {...fadeUp(0.34)}
-          className="body-large mt-6 max-w-2xl text-muted"
-        >
-          Full-stack engineer focused on polished interfaces, backend APIs,
-          mobile products, and reliable software delivery.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          {...fadeUp(0.44)}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <MagneticButton onClick={() => handleScrollTo("projects")}>
-            View selected work
-          </MagneticButton>
-          <MagneticButton href="/Tolu_resume.pdf" download variant="secondary">
-            <Download size={14} />
+        <div className="rise-in mt-10 flex flex-wrap items-center gap-3" style={{ "--delay": "800ms" } as React.CSSProperties}>
+          <Link
+            href="/#work"
+            className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-lg font-medium text-paper transition-opacity hover:opacity-85"
+          >
+            See my work
+          </Link>
+          <a
+            href="/Tolu_resume.pdf"
+            download
+            className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-ink px-7 text-lg font-medium transition-colors hover:bg-ink hover:text-paper"
+          >
+            <Download size={18} aria-hidden="true" />
             Download CV
-          </MagneticButton>
-        </motion.div>
+          </a>
+          <div className="ml-1 flex items-center">
+            {socials.slice(0, 3).map((s) => (
+              <SocialLink key={s.icon} label={s.label} href={s.href} icon={s.icon} />
+            ))}
+          </div>
+        </div>
 
-        {/* Social links */}
-        <motion.div
-          {...fadeUp(0.52)}
-          className="mt-10 flex items-center gap-4"
-        >
-          {socials.slice(0, 5).map((s) => (
-            <SocialLink key={s.icon} label={s.label} href={s.href} icon={s.icon} />
-          ))}
-        </motion.div>
-
-        {/* Focus strip */}
-        <motion.div
-          {...fadeUp(0.6)}
-          className="mt-16 flex flex-wrap items-center gap-2 text-xs text-text-soft"
-        >
-          <span className="text-accent/60 tracking-widest uppercase text-[0.65rem]">
-            Current focus
-          </span>
-          {FOCUS_ITEMS.map((item) => (
-            <span key={item} className="flex items-center gap-2">
-              <span className="text-muted/60">·</span>
-              <span className="text-muted/70">{item}</span>
-            </span>
-          ))}
-        </motion.div>
+        <div className="rise-in mt-16 border-t border-rule pt-10 md:mt-20" style={{ "--delay": "1000ms" } as React.CSSProperties}>
+          <HeroPipeline />
+        </div>
       </div>
     </section>
   );

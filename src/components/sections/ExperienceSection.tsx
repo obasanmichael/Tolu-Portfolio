@@ -1,192 +1,179 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef, useState } from "react";
 import {
+  AnimatePresence,
   motion,
-  type MotionValue,
-  useScroll,
-  useTransform,
   useReducedMotion,
+  useScroll,
+  useSpring,
 } from "motion/react";
+import { Plus } from "lucide-react";
 import { Section, SectionHeading } from "@/components/layout/Section";
-import { StackPill } from "@/components/ui/StackPill";
+import { EASE_OUT } from "@/components/motion/ease";
 import { experiences } from "@/data/experience";
 import { cn } from "@/lib/utils";
 import { type Experience } from "@/types";
 
-const typeLabels: Record<string, string> = {
+const typeLabels: Record<Experience["type"], string> = {
   "full-time": "Full-time",
   contract: "Contract",
   freelance: "Freelance",
   "part-time": "Part-time",
+  program: "Training program",
 };
 
-/* ─── Each card has its own scroll tracker for reversibility ──── */
-function ExperienceCard({
-  exp,
-  index,
-  dotOpacity,
-}: {
-  exp: Experience;
-  index: number;
-  dotOpacity: MotionValue<number>;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start 0.92", "start 0.42"],
-  });
+const listVariants = {
+  open: { transition: { staggerChildren: 0.06, delayChildren: 0.12 } },
+  closed: {},
+};
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.4, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [52, 0]);
-  const x = useTransform(scrollYProgress, [0, 1], [-18, 0]);
+const itemVariants = {
+  open: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: EASE_OUT } },
+  closed: { opacity: 0, y: 14, filter: "blur(4px)" },
+};
+
+function Role({ exp, defaultOpen }: { exp: Experience; defaultOpen: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const reduce = useReducedMotion();
+  const panelId = useId();
+  const [start, end] = exp.period.split(/\s+-\s+/);
+  const startYear = start.match(/\d{4}/)?.[0] ?? start;
+  const isCurrent = end?.toLowerCase() === "present";
 
   return (
-    <div ref={cardRef} className="relative pl-10 lg:pl-20">
-      {/* Timeline dot — fades in as line draws past it */}
-      <motion.div
-        style={{ opacity: dotOpacity }}
-        className={cn(
-          "absolute left-[11px] top-6 h-2.5 w-2.5 rounded-full border-2 border-bg lg:left-[27px]",
-          index === 0
-            ? "border-accent bg-accent shadow-[0_0_10px_rgba(155,239,143,0.5)]"
-            : "border-border bg-surface"
+    <motion.li layout={!reduce} className="relative pl-12 md:pl-16">
+      <span aria-hidden="true" className="absolute left-0 top-9 flex h-7 w-7 items-center justify-center">
+        {isCurrent && !reduce && (
+          <span className="absolute h-7 w-7 animate-ping rounded-full bg-signal/40" />
         )}
-        aria-hidden="true"
-      />
+        <span
+          className={cn(
+            "relative h-3.5 w-3.5 rounded-full border-2 transition-all duration-500",
+            open || isCurrent ? "scale-110 border-signal bg-signal" : "border-ink bg-paper"
+          )}
+        />
+      </span>
 
-      {/* Card */}
-      <motion.div
-        style={{ opacity, y, x }}
-        className="rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:border-border-hover"
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="group grid w-full gap-2 py-8 text-left md:grid-cols-[minmax(0,3fr)_minmax(0,8fr)_auto] md:items-start md:gap-10"
       >
-        {/* Header */}
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <div className="mb-1.5 flex flex-wrap items-center gap-2">
-              <span
-                className={cn(
-                  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-medium",
-                  index === 0
-                    ? "border-accent/20 bg-accent/10 text-accent"
-                    : "border-border bg-surface-alt text-muted"
-                )}
+        <span className="flex items-baseline gap-3 md:flex-col md:gap-1">
+          <span
+            className="font-display text-4xl font-bold leading-none tracking-tight md:text-5xl"
+            style={{ fontVariationSettings: '"wdth" 88' }}
+          >
+            {startYear}
+          </span>
+          <span className="text-base text-graphite">
+            {start.replace(startYear, "").trim()} {start.replace(startYear, "").trim() && "–"} {end}
+          </span>
+        </span>
+
+        <span className="flex min-w-0 flex-col">
+          <span className="font-display text-2xl font-semibold leading-tight tracking-tight transition-colors group-hover:text-signal md:text-3xl">
+            {exp.role}
+          </span>
+          <span className="mt-1.5 text-lg text-graphite">
+            {exp.company}, {typeLabels[exp.type].toLowerCase()}, {exp.duration.toLowerCase()}
+          </span>
+          <AnimatePresence initial={false}>
+            {!open && (
+              <motion.span
+                key="preview"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: EASE_OUT }}
+                className="block overflow-hidden"
               >
-                {typeLabels[exp.type]}
-              </span>
-              <span className="text-xs text-muted">{exp.period}</span>
-              <span className="text-xs text-muted">· {exp.duration}</span>
-            </div>
-            <h3
-              className="text-lg font-semibold text-text"
-              style={{ fontFamily: "var(--font-display)" }}
+                <span className="mt-3 block max-w-[60ch] truncate text-base text-graphite">{exp.summary}</span>
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
+
+        <span
+          aria-hidden="true"
+          className={cn(
+            "hidden h-11 w-11 items-center justify-center rounded-full border-2 transition-all duration-300 md:flex",
+            open ? "rotate-45 border-ink bg-ink text-paper" : "border-rule group-hover:border-ink"
+          )}
+        >
+          <Plus size={20} />
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            id={panelId}
+            key="panel"
+            initial={reduce ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={reduce ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
+            className="overflow-hidden"
+          >
+            <motion.div
+              variants={listVariants}
+              initial={reduce ? false : "closed"}
+              animate="open"
+              className="grid pb-10 md:grid-cols-[minmax(0,3fr)_minmax(0,8fr)_auto] md:gap-10"
             >
-              {exp.role}
-            </h3>
-            <p className="text-sm text-accent/80">{exp.company}</p>
-          </div>
-        </div>
-
-        {/* Summary */}
-        <p className="mb-4 text-sm leading-relaxed text-muted">
-          {exp.summary}
-        </p>
-
-        {/* Responsibilities */}
-        <ul className="mb-4 space-y-1.5">
-          {exp.responsibilities.map((r, ri) => (
-            <li key={ri} className="flex items-start gap-2 text-sm text-muted">
-              <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent/40" />
-              {r}
-            </li>
-          ))}
-        </ul>
-
-        {/* Tools */}
-        <div className="flex flex-wrap gap-1.5">
-          {exp.tools.map((tool) => (
-            <StackPill key={tool} name={tool} />
-          ))}
-        </div>
-      </motion.div>
-    </div>
+              <div className="md:col-start-2">
+                <motion.p variants={itemVariants} className="max-w-[60ch] text-lg leading-relaxed">
+                  {exp.summary}
+                </motion.p>
+                <ul className="mt-6 max-w-[60ch] space-y-3">
+                  {exp.responsibilities.map((r) => (
+                    <motion.li
+                      key={r}
+                      variants={itemVariants}
+                      className="flex gap-3.5 text-lg leading-relaxed text-graphite"
+                    >
+                      <span className="mt-3 h-px w-4 shrink-0 bg-ink" aria-hidden="true" />
+                      {r}
+                    </motion.li>
+                  ))}
+                </ul>
+                <motion.p variants={itemVariants} className="mt-7 text-base text-graphite">
+                  <span className="font-medium text-ink">Tools </span>
+                  {exp.tools.join(", ")}
+                </motion.p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.li>
   );
 }
 
-/* ─── Section ──────────────────────────────────────────────────── */
 export function ExperienceSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const prefersReduced = useReducedMotion();
-
-  /*
-   * Section-level scroll drives the timeline line.
-   * Starts tracking when top of section enters at 85% of viewport,
-   * finishes when bottom exits at 20%.
-   */
-  const { scrollYProgress: sectionProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 0.85", "end 0.25"],
-  });
-
-  /* Line draws from 0 → 100% height */
-  const lineScaleY = useTransform(sectionProgress, [0, 1], [0, 1]);
-
-  /*
-   * Dot opacities — each dot lights up when the line reaches it.
-   * With 2 entries spaced equally, first dot at ~10%, second at ~55%.
-   */
-  const dot0Opacity = useTransform(sectionProgress, [0.08, 0.28], [0, 1]);
-  const dot1Opacity = useTransform(sectionProgress, [0.5, 0.68], [0, 1]);
-  const dotOpacities = [dot0Opacity, dot1Opacity];
-
-  if (prefersReduced) {
-    return (
-      <Section id="experience">
-        <SectionHeading label="Experience" title="Where I've worked." />
-        <div className="relative space-y-8">
-          <div className="absolute left-4 top-0 h-full w-px bg-border lg:left-8" />
-          {experiences.map((exp, i) => (
-            <ExperienceCard
-              key={exp.id}
-              exp={exp}
-              index={i}
-              dotOpacity={dotOpacities[i] ?? dotOpacities[0]}
-            />
-          ))}
-        </div>
-      </Section>
-    );
-  }
+  const listRef = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 0.8", "end 0.6"] });
+  const line = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.4 });
 
   return (
     <Section id="experience">
-      <SectionHeading label="Experience" title="Where I've worked." />
-
-      <div ref={sectionRef} className="relative">
-        {/* Static track (full height, very faint) */}
-        <div
-          className="absolute left-4 top-0 h-full w-px bg-border/30 lg:left-8"
-          aria-hidden="true"
-        />
-
-        {/* Animated drawing line — scaleY origin top */}
-        <motion.div
-          style={{ scaleY: lineScaleY, transformOrigin: "top center" }}
-          className="absolute left-4 top-0 h-full w-px bg-linear-to-b from-accent/70 via-accent/40 to-accent/10 lg:left-8"
-          aria-hidden="true"
-        />
-
-        <div className="space-y-8">
-          {experiences.map((exp, i) => (
-            <ExperienceCard
-              key={exp.id}
-              exp={exp}
-              index={i}
-              dotOpacity={dotOpacities[i] ?? dotOpacities[0]}
-            />
-          ))}
-        </div>
-      </div>
+      <SectionHeading title="Experience" />
+      <ol ref={listRef} className="relative border-y border-rule">
+        <span aria-hidden="true" className="absolute bottom-0 left-[13px] top-0 w-0.5 bg-rule">
+          <motion.span
+            className="block h-full w-full origin-top bg-ink"
+            style={{ scaleY: reduce ? 1 : line }}
+          />
+        </span>
+        {experiences.map((exp, i) => (
+          <Role key={exp.id} exp={exp} defaultOpen={i === 0} />
+        ))}
+      </ol>
     </Section>
   );
 }

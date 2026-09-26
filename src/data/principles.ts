@@ -21,12 +21,18 @@ export const principles: Principle[] = [
   },
   {
     number: "04",
+    title: "The model proposes, code enforces",
+    description:
+      "Countable facts, limits and approvals live in code. AI handles judgment and language, and a person signs off before anything reaches a client.",
+  },
+  {
+    number: "05",
     title: "Polished user experience",
     description:
       "I believe good engineering should feel smooth to the person using the product. The user's experience is part of the engineering quality.",
   },
   {
-    number: "05",
+    number: "06",
     title: "Documentation and handover",
     description:
       "I value decisions that future engineers can understand and maintain. Work that can't be handed over is incomplete.",

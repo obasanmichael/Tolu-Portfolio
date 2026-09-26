@@ -1,32 +1,47 @@
-import type { Metadata } from "next";
-import { Geist, Space_Grotesk, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
+  axes: ["wdth", "opsz"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
+  axes: ["wdth"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+// Runs before first paint so a stored or system dark preference never flashes light.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()`;
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
+
+const TITLE = "Tolulope Obasan | Full-Stack & AI Automation Engineer";
+const DESCRIPTION =
+  "Portfolio of Tolulope Obasan, a full-stack and AI automation engineer building web and mobile products, and AI systems with Claude where code enforces the rules and a person signs off.";
 
 export const metadata: Metadata = {
-  title: "Tolulope Obasan | Full-Stack Engineer",
-  description:
-    "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: [
     "Tolulope Obasan",
     "Full-Stack Engineer",
+    "AI Automation Engineer",
+    "AI Agents",
+    "Claude",
+    "Claude Agent SDK",
+    "n8n",
+    "Workflow Automation",
     "React",
     "Next.js",
     "TypeScript",
@@ -42,25 +57,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://tolulopeobasan.dev",
-    title: "Tolulope Obasan | Full-Stack Engineer",
-    description:
-      "Portfolio of Tolulope Obasan, a full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
+    title: TITLE,
+    description: DESCRIPTION,
     siteName: "Tolulope Obasan",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tolulope Obasan | Full-Stack Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tolulope Obasan | Full-Stack Engineer",
-    description:
-      "Full-stack engineer building practical software systems across web, backend, mobile, and product-focused applications.",
-    images: ["/og-image.png"],
+    title: TITLE,
+    description: DESCRIPTION,
   },
   robots: {
     index: true,
@@ -83,9 +87,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${spaceGrotesk.variable} ${geistMono.variable}`}
+      className={`${bricolage.variable} ${instrument.variable}`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen antialiased">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }

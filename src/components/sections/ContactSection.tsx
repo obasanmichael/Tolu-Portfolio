@@ -4,10 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { motion } from "motion/react";
-import { MessageCircle, Send, CheckCircle } from "lucide-react";
+import { MessageCircle, CheckCircle } from "lucide-react";
 import { SocialLink } from "@/components/ui/SocialLink";
-import { Section, SectionHeading } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
@@ -50,145 +49,95 @@ export function ContactSection() {
     setTimeout(() => setSubmitted(false), 5000);
   };
 
+  const field =
+    "w-full rounded-[10px] border-2 bg-paper px-4 py-3.5 text-lg text-ink placeholder:text-graphite/70 outline-none transition-colors focus:border-signal";
+
   return (
     <Section id="contact">
-      <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-        {/* Left */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-        >
-          <SectionHeading
-            label="Contact"
-            title="Have a role, product, or project in mind?"
-          />
-          <p className="text-base leading-relaxed text-muted">
-            Send a message. I respond promptly.
+      <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <div>
+          <h2 className="type-title max-w-[12ch]">Have a role or a project in mind?</h2>
+          <p className="type-lead mt-6 max-w-[40ch] text-graphite">
+            Tell me what you&apos;re working on. I reply within a day.
           </p>
-
-          <div className="mt-8 flex flex-col gap-3.5">
-            {quickLinks.map(({ label, href, icon }) => (
-              <SocialLink
-                key={label}
-                label={label}
-                href={href}
-                icon={icon}
-                showLabel
-              />
-            ))}
+          <a
+            href="mailto:obasantolu@gmail.com"
+            className="mt-10 inline-block font-display text-xl font-semibold tracking-tight underline decoration-rule decoration-2 underline-offset-8 transition-colors hover:decoration-signal sm:text-2xl"
+          >
+            obasantolu@gmail.com
+          </a>
+          <div className="mt-8 flex flex-col">
+            {quickLinks
+              .filter((l) => l.icon !== "mail")
+              .map(({ label, href, icon }) => (
+                <SocialLink key={label} label={label} href={href} icon={icon} showLabel />
+              ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Right: form */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.15, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-        >
+        <div>
           {submitted ? (
-            <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-10 text-center">
-              <CheckCircle className="mb-4 text-emerald-400" size={40} />
-              <h3
-                className="mb-2 text-lg font-semibold text-text"
-                style={{ fontFamily: "var(--font-heading)" }}
-              >
-                Message sent!
-              </h3>
-              <p className="text-sm text-muted">
-                WhatsApp opened with your message. I&apos;ll get back to you soon.
-              </p>
+            <div role="status" className="flex h-full flex-col justify-center rounded-[14px] bg-surface p-10">
+              <CheckCircle className="mb-5 text-signal" size={36} aria-hidden="true" />
+              <p className="font-display text-2xl font-semibold tracking-tight">WhatsApp is open with your message.</p>
+              <p className="mt-3 text-lg text-graphite">Send it there and I&apos;ll get back to you.</p>
             </div>
           ) : (
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="space-y-4"
-              noValidate
-              aria-label="Contact form"
-            >
-              {/* Name */}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate aria-label="Contact form">
               <div>
-                <label
-                  htmlFor="name"
-                  className="mb-1.5 block text-sm font-medium text-text"
-                >
+                <label htmlFor="name" className="mb-2 block text-base font-medium">
                   Name
                 </label>
                 <input
                   id="name"
                   type="text"
                   autoComplete="name"
-                  placeholder="Your name"
                   {...register("name")}
-                  className={cn(
-                    "w-full rounded-xl border bg-surface px-4 py-3 text-sm text-text placeholder:text-muted/50 outline-none transition-all duration-200",
-                    "focus:border-accent focus:ring-1 focus:ring-accent",
-                    errors.name ? "border-red-500/60" : "border-border"
-                  )}
+                  className={cn(field, errors.name ? "border-red-600" : "border-rule")}
                   aria-describedby={errors.name ? "name-error" : undefined}
                   aria-invalid={!!errors.name}
                 />
                 {errors.name && (
-                  <p id="name-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                  <p id="name-error" role="alert" className="mt-2 text-base text-red-600 dark:text-red-400">
                     {errors.name.message}
                   </p>
                 )}
               </div>
 
-              {/* Email */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-text"
-                >
+                <label htmlFor="email" className="mb-2 block text-base font-medium">
                   Email
                 </label>
                 <input
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="your@email.com"
                   {...register("email")}
-                  className={cn(
-                    "w-full rounded-xl border bg-surface px-4 py-3 text-sm text-text placeholder:text-muted/50 outline-none transition-all duration-200",
-                    "focus:border-accent focus:ring-1 focus:ring-accent",
-                    errors.email ? "border-red-500/60" : "border-border"
-                  )}
+                  className={cn(field, errors.email ? "border-red-600" : "border-rule")}
                   aria-describedby={errors.email ? "email-error" : undefined}
                   aria-invalid={!!errors.email}
                 />
                 {errors.email && (
-                  <p id="email-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                  <p id="email-error" role="alert" className="mt-2 text-base text-red-600 dark:text-red-400">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              {/* Message */}
               <div>
-                <label
-                  htmlFor="message"
-                  className="mb-1.5 block text-sm font-medium text-text"
-                >
+                <label htmlFor="message" className="mb-2 block text-base font-medium">
                   Message
                 </label>
                 <textarea
                   id="message"
                   rows={5}
-                  placeholder="What would you like to discuss?"
                   {...register("message")}
-                  className={cn(
-                    "w-full resize-none rounded-xl border bg-surface px-4 py-3 text-sm text-text placeholder:text-muted/50 outline-none transition-all duration-200",
-                    "focus:border-accent focus:ring-1 focus:ring-accent",
-                    errors.message ? "border-red-500/60" : "border-border"
-                  )}
+                  className={cn(field, "resize-none", errors.message ? "border-red-600" : "border-rule")}
                   aria-describedby={errors.message ? "message-error" : undefined}
                   aria-invalid={!!errors.message}
                 />
                 {errors.message && (
-                  <p id="message-error" role="alert" className="mt-1.5 text-xs text-red-400">
+                  <p id="message-error" role="alert" className="mt-2 text-base text-red-600 dark:text-red-400">
                     {errors.message.message}
                   </p>
                 )}
@@ -197,15 +146,14 @@ export function ContactSection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-3 text-sm font-semibold text-bg shadow-[0_0_24px_rgba(155,239,143,0.2)] transition-all duration-200 hover:bg-[#b8f5ae] hover:shadow-[0_0_36px_rgba(155,239,143,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-13 w-full items-center justify-center gap-2.5 rounded-full bg-ink text-lg font-medium text-paper transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <MessageCircle size={15} />
-                Send via WhatsApp
-                <Send size={13} />
+                <MessageCircle size={19} aria-hidden="true" />
+                Send on WhatsApp
               </button>
             </form>
           )}
-        </motion.div>
+        </div>
       </div>
     </Section>
   );
