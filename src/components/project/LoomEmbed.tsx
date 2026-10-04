@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 
 interface LoomEmbedProps {
-  loomId: string;
+  embedUrl: string;
   projectName: string;
   durationLabel: string;
   thumbnailUrl: string | null;
@@ -13,9 +13,9 @@ interface LoomEmbedProps {
   height: number;
 }
 
-/** Click-to-play facade: Loom's iframe and scripts only load once the visitor asks. */
+/** Click-to-play facade: the host's iframe and scripts only load once the visitor asks. */
 export function LoomEmbed({
-  loomId,
+  embedUrl,
   projectName,
   durationLabel,
   thumbnailUrl,
@@ -31,7 +31,7 @@ export function LoomEmbed({
     >
       {playing ? (
         <iframe
-          src={`https://www.loom.com/embed/${loomId}?autoplay=1&hide_owner=true&hide_share=true&hideEmbedTopBar=true`}
+          src={embedUrl}
           title={`${projectName} walkthrough`}
           allow="autoplay; fullscreen"
           allowFullScreen

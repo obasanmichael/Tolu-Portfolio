@@ -1,12 +1,12 @@
 import { ViewTransition } from "react";
-import { getLoomMeta } from "@/lib/loom";
+import { getWalkthroughMeta } from "@/lib/walkthrough";
 import { ThumbMedia } from "./ThumbMedia";
 import { CursorWipe } from "@/components/motion/CursorWipe";
 import { type Project } from "@/types";
 
 /** Walkthrough still for projects with a video; a typographic tile for the rest. */
 export async function ProjectThumb({ project, priority = false }: { project: Project; priority?: boolean }) {
-  const loom = project.detail ? await getLoomMeta(project.detail.loomId) : null;
+  const loom = project.detail ? await getWalkthroughMeta(project.detail) : null;
 
   const frame = loom?.thumbnailUrl ? (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-band">

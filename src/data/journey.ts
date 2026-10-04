@@ -16,7 +16,7 @@ export const journey = [
     label: "2026",
     title: "AI automation",
     sub: "Koya Talent",
-    note: "Five AI systems built with Claude, where code enforces the rules and a person signs off.",
+    note: "Six AI systems built with Claude, where code enforces the rules and a person signs off.",
   },
   {
     label: "Now",

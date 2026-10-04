@@ -27,9 +27,11 @@ export interface Project {
   detail?: ProjectDetail;
 }
 
+/** The walkthrough video is hosted on Loom or on Google Drive, never both. */
+type Walkthrough = { loomId: string; driveId?: never } | { driveId: string; loomId?: never };
+
 /** Presence of `detail` is what gives a project its own /projects/[id] page. */
-export interface ProjectDetail {
-  loomId: string;
+export type ProjectDetail = Walkthrough & {
   durationLabel: string;
   flow: string[];
   /** Indexes into `flow` where code checks the work. */
@@ -42,7 +44,7 @@ export interface ProjectDetail {
     credentials?: { role: string; email: string; password: string }[];
     notice?: string;
   };
-}
+};
 
 export interface StackItem {
   name: string;

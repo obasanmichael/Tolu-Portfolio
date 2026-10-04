@@ -4,6 +4,57 @@ const KOYA = "Koya Talent";
 
 export const projects: Project[] = [
   {
+    id: "relaypay-support",
+    name: "RelayPay Support",
+    type: "AI Voice Support Agent",
+    group: "ai-automation",
+    program: { name: KOYA, week: 6 },
+    tagline:
+      "A voice agent that answers support questions from approved knowledge and hands sensitive cases to a person.",
+    chips: ["Voice agent + MCP server", "Code decides what can be said", "Haiku 4.5, chosen by measurement"],
+    stack: ["Next.js", "Claude Agent SDK", "MCP", "Vapi", "Supabase", "Render"],
+    links: { live: "https://relaypay-support.onrender.com" },
+    detail: {
+      driveId: "1cM2Mn9C_KA983ZqIY__rMaGGAFQfGAY3",
+      durationLabel: "7 min",
+      flow: [
+        "Name and email",
+        "Speech to text",
+        "Search approved knowledge",
+        "Score the evidence",
+        "Answer, clarify, escalate or decline",
+        "MCP tools",
+        "Check before speaking",
+        "Specialist takes over",
+        "Ops console",
+      ],
+      checks: [3, 5, 6],
+      approval: 7,
+      stats: [
+        { value: "7", label: "MCP tools" },
+        { value: "21", label: "scenarios run on the live system" },
+        { value: "0", label: "amounts or contact details spoken" },
+      ],
+      decisions: [
+        {
+          title: "Code decides whether an answer is allowed",
+          detail: "The server scores what the knowledge search found. Tuned on 30 labelled questions, it went from letting 5 of 10 unanswerable ones through to none.",
+        },
+        {
+          title: "Haiku 4.5, chosen by measurement",
+          detail: "Sonnet and Opus followed the same rules on six high-risk scenarios. Haiku replied fastest, at about a fifth of Opus's cost.",
+        },
+      ],
+      access: {
+        credentials: [
+          { role: "Admin", email: "ops@relaypay.test", password: "RelayPay-Ops-2026" },
+        ],
+        notice:
+          "Hosted on Render's free tier, so the first load can take up to a minute, and only one call runs at a time. The login is for the staff console at /ops.",
+      },
+    },
+  },
+  {
     id: "outreachpilot",
     name: "OutreachPilot",
     type: "AI Agent",

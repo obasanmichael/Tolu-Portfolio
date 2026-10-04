@@ -10,7 +10,7 @@ import { AccessPanel } from "@/components/project/AccessPanel";
 import { ScrollPipeline } from "@/components/pipeline/ScrollPipeline";
 import { detailProjects, getProject } from "@/data/projects";
 import { getWorkGroup } from "@/data/workGroups";
-import { getLoomMeta } from "@/lib/loom";
+import { getWalkthroughMeta, walkthroughEmbedUrl } from "@/lib/walkthrough";
 import { MaskReveal } from "@/components/motion/MaskReveal";
 import { CountUp } from "@/components/motion/CountUp";
 import { ScrollGrow } from "@/components/motion/ScrollGrow";
@@ -64,7 +64,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   if (!project?.detail) notFound();
 
   const { detail } = project;
-  const loom = await getLoomMeta(detail.loomId);
+  const loom = await getWalkthroughMeta(detail);
   const group = getWorkGroup(project.group);
 
   const index = detailProjects.findIndex((p) => p.id === project.id);
@@ -104,7 +104,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               <ViewTransition name={`project-media-${project.id}`} share="morph" default="none">
                 <div>
                   <LoomEmbed
-                    loomId={detail.loomId}
+                    embedUrl={walkthroughEmbedUrl(detail)}
                     projectName={project.name}
                     durationLabel={detail.durationLabel}
                     thumbnailUrl={loom.thumbnailUrl}
