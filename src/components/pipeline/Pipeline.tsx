@@ -35,7 +35,7 @@ function Marker({
 
   if (kind === "approval") {
     return (
-      <span className={cn("relative flex items-center justify-center", box)}>
+      <span className={cn("relative flex shrink-0 items-center justify-center", box)}>
         <AnimatePresence>
           {reached && (
             <motion.span
@@ -62,7 +62,7 @@ function Marker({
   return (
     <span
       className={cn(
-        "flex items-center justify-center rounded-full border-2 transition-colors duration-300",
+        "flex shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-300",
         box,
         reached ? "border-ink bg-ink text-paper" : "border-rule bg-paper"
       )}
