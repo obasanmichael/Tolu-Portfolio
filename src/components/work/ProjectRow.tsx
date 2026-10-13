@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/icons";
+import { DemoLogin } from "@/components/project/AccessPanel";
 import { ProjectThumb } from "./ProjectThumb";
 import { type Project } from "@/types";
 
@@ -107,6 +108,9 @@ export function ProjectRow({ project, priority = false }: { project: Project; pr
             </a>
           ))}
         </div>
+        {project.demoLogin && (
+          <DemoLogin credentials={[project.demoLogin]} className="relative z-10 mt-4 border-y border-rule" />
+        )}
       </div>
     </article>
   );

@@ -155,6 +155,7 @@ export const projects: Project[] = [
   {
     id: "jobtrackr",
     image: "/projects/jobtrackr.jpg",
+    demoLogin: { role: "Demo", email: "obasantolu@gmail.com", password: "obastolu2005" },
     name: "JobTrackr",
     type: "Web + Mobile SaaS",
     group: "products",

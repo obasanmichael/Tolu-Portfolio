@@ -24,6 +24,8 @@ export interface Project {
   /** Screenshot under /public, used where there's no walkthrough thumbnail. */
   image?: string;
   year?: string;
+  /** Shared test account, shown on the project row for projects without a detail page. */
+  demoLogin?: { role: string; email: string; password: string };
   detail?: ProjectDetail;
 }
 

@@ -40,6 +40,32 @@ function CopyField({ label, value }: { label: string; value: string }) {
   );
 }
 
+export function DemoLogin({
+  credentials,
+  className = "mt-8 border-y border-rule",
+}: {
+  credentials: { role: string; email: string; password: string }[];
+  className?: string;
+}) {
+  return (
+    <Disclosure
+      className={className}
+      summaryClassName="py-4"
+      summary={<span className="text-lg font-medium">Show the demo login</span>}
+    >
+      <div className="pb-5">
+        {credentials.map((c) => (
+          <div key={c.email}>
+            <p className="pb-2 pt-1 text-base text-graphite">{c.role} account, shared with visitors</p>
+            <CopyField label="Email" value={c.email} />
+            <CopyField label="Password" value={c.password} />
+          </div>
+        ))}
+      </div>
+    </Disclosure>
+  );
+}
+
 interface AccessPanelProps {
   liveUrl?: string;
   access?: ProjectDetail["access"];
@@ -67,23 +93,7 @@ export function AccessPanel({ liveUrl, access }: AccessPanelProps) {
         </a>
       )}
 
-      {access?.credentials && (
-        <Disclosure
-          className="mt-8 border-y border-rule"
-          summaryClassName="py-4"
-          summary={<span className="text-lg font-medium">Show the demo login</span>}
-        >
-          <div className="pb-5">
-            {access.credentials.map((c) => (
-              <div key={c.email}>
-                <p className="pb-2 pt-1 text-base text-graphite">{c.role} account, shared with visitors</p>
-                <CopyField label="Email" value={c.email} />
-                <CopyField label="Password" value={c.password} />
-              </div>
-            ))}
-          </div>
-        </Disclosure>
-      )}
+      {access?.credentials && <DemoLogin credentials={access.credentials} />}
     </div>
   );
 }
