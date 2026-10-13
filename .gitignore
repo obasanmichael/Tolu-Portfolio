@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original full-size screenshots; optimized copies live in public/projects
+/Portfolio Screenshots/
