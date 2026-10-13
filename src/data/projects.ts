@@ -154,6 +154,7 @@ export const projects: Project[] = [
   },
   {
     id: "jobtrackr",
+    image: "/projects/jobtrackr.jpg",
     name: "JobTrackr",
     type: "Web + Mobile SaaS",
     group: "products",
@@ -313,6 +314,7 @@ export const projects: Project[] = [
   },
   {
     id: "whossy",
+    image: "/projects/whossy.jpg",
     name: "Whossy",
     type: "Dating app, web and mobile",
     group: "products",
@@ -325,6 +327,7 @@ export const projects: Project[] = [
   },
   {
     id: "travely",
+    image: "/projects/travely.jpg",
     name: "Travely",
     type: "Travel Recommendation App",
     group: "products",
@@ -340,6 +343,7 @@ export const projects: Project[] = [
   },
   {
     id: "cbm-emr",
+    image: "/projects/cbm-emr.jpg",
     name: "CBM-EMR",
     type: "Healthcare Web Application",
     group: "products",

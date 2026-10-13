@@ -1,10 +1,11 @@
 import { ViewTransition } from "react";
+import Image from "next/image";
 import { getWalkthroughMeta } from "@/lib/walkthrough";
 import { ThumbMedia } from "./ThumbMedia";
 import { CursorWipe } from "@/components/motion/CursorWipe";
 import { type Project } from "@/types";
 
-/** Walkthrough still for projects with a video; a typographic tile for the rest. */
+/** Walkthrough still for projects with a video, a screenshot where there's one, else a typographic tile. */
 export async function ProjectThumb({ project, priority = false }: { project: Project; priority?: boolean }) {
   const loom = project.detail ? await getWalkthroughMeta(project.detail) : null;
 
@@ -15,6 +16,17 @@ export async function ProjectThumb({ project, priority = false }: { project: Pro
         preview={loom.previewUrl}
         durationLabel={project.detail?.durationLabel}
         priority={priority}
+      />
+    </div>
+  ) : project.image ? (
+    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-band">
+      <Image
+        src={project.image}
+        alt={`${project.name} screenshot`}
+        fill
+        priority={priority}
+        sizes="(min-width: 1024px) 560px, 100vw"
+        className="object-cover object-top"
       />
     </div>
   ) : (
