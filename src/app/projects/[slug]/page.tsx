@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LoomEmbed } from "@/components/project/LoomEmbed";
+import { RenderNotice } from "@/components/project/RenderNotice";
 import { AccessPanel } from "@/components/project/AccessPanel";
 import { ScrollPipeline } from "@/components/pipeline/ScrollPipeline";
 import { detailProjects, getProject } from "@/data/projects";
@@ -167,7 +168,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           <section id="try-it" className="bg-surface px-5 py-16 sm:px-8 md:py-20">
             <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-16">
               <MaskReveal text="Try it yourself" className="type-title" />
-              <AccessPanel liveUrl={project.links.live} access={detail.access} />
+              <div>
+                {project.renderSuspended && <RenderNotice scope={project.renderSuspended} className="mb-8 max-w-2xl" />}
+                <AccessPanel liveUrl={project.links.live} access={detail.access} />
+              </div>
             </div>
           </section>
         )}

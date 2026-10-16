@@ -5,6 +5,7 @@ const KOYA = "Koya Talent";
 export const projects: Project[] = [
   {
     id: "relaypay-support",
+    renderSuspended: "site",
     name: "RelayPay Support",
     type: "AI Voice Support Agent",
     group: "ai-automation",
@@ -56,6 +57,7 @@ export const projects: Project[] = [
   },
   {
     id: "outreachpilot",
+    renderSuspended: "site",
     name: "OutreachPilot",
     type: "AI Agent",
     group: "ai-automation",
@@ -154,6 +156,7 @@ export const projects: Project[] = [
   },
   {
     id: "jobtrackr",
+    renderSuspended: "backend",
     image: "/projects/jobtrackr.jpg",
     demoLogin: { role: "Demo", email: "obasantolu@gmail.com", password: "abcd1234" },
     name: "JobTrackr",
@@ -328,6 +331,7 @@ export const projects: Project[] = [
   },
   {
     id: "travely",
+    renderSuspended: "backend",
     image: "/projects/travely.jpg",
     name: "Travely",
     type: "Travel Recommendation App",

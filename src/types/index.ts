@@ -24,6 +24,8 @@ export interface Project {
   /** Screenshot under /public, used where there's no walkthrough thumbnail. */
   image?: string;
   year?: string;
+  /** Set while the Render workspace is suspended: the whole demo, or just the API behind it. */
+  renderSuspended?: "site" | "backend";
   /** Shared test account, shown on the project row for projects without a detail page. */
   demoLogin?: { role: string; email: string; password: string };
   detail?: ProjectDetail;
