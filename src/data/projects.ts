@@ -57,7 +57,6 @@ export const projects: Project[] = [
   },
   {
     id: "outreachpilot",
-    renderSuspended: "site",
     name: "OutreachPilot",
     type: "AI Agent",
     group: "ai-automation",
@@ -66,8 +65,8 @@ export const projects: Project[] = [
     tagline:
       "An AI agent that finds, qualifies and drafts outreach for B2B leads, and never sends anything.",
     chips: ["Claude Agent SDK", "Limits enforced in code", "~$1.24 per 10 leads"],
-    stack: ["Next.js", "Claude Agent SDK", "Apify", "Firecrawl", "Supabase", "Docker", "Render"],
-    links: { live: "https://outreach-pilot.onrender.com" },
+    stack: ["Next.js", "Claude Agent SDK", "Apify", "Firecrawl", "Supabase", "Docker", "Fly.io"],
+    links: { live: "https://outreach-pilot-holy-hillside-9226.fly.dev" },
     detail: {
       loomId: "412e27cde4ef4c4795149f69d4894d9e",
       durationLabel: "5 min",
@@ -103,8 +102,7 @@ export const projects: Project[] = [
         credentials: [
           { role: "Admin", email: "admin@outreachpilot.test", password: "TestPassword123!" },
         ],
-        notice:
-          "Hosted on Render's free tier, so the first load can take up to a minute. A full run takes about 13 minutes.",
+        notice: "A full run takes about 13 minutes.",
       },
     },
   },
@@ -156,7 +154,6 @@ export const projects: Project[] = [
   },
   {
     id: "jobtrackr",
-    renderSuspended: "backend",
     image: "/projects/jobtrackr.jpg",
     demoLogin: { role: "Demo", email: "obasantolu@gmail.com", password: "abcd1234" },
     name: "JobTrackr",
@@ -331,7 +328,6 @@ export const projects: Project[] = [
   },
   {
     id: "travely",
-    renderSuspended: "backend",
     image: "/projects/travely.jpg",
     name: "Travely",
     type: "Travel Recommendation App",
