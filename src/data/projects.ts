@@ -102,7 +102,8 @@ export const projects: Project[] = [
         credentials: [
           { role: "Admin", email: "admin@outreachpilot.test", password: "TestPassword123!" },
         ],
-        notice: "A full run takes about 13 minutes.",
+        notice:
+          "The demo runs in mock mode for now: the Apify and Firecrawl accounts behind real lead discovery aren't set up on a usable plan yet, so runs use sample leads instead of live web data. A live run takes about 13 minutes.",
       },
     },
   },
