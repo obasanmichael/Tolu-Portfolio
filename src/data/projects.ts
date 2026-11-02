@@ -5,7 +5,6 @@ const KOYA = "Koya Talent";
 export const projects: Project[] = [
   {
     id: "relaypay-support",
-    renderSuspended: "site",
     name: "RelayPay Support",
     type: "AI Voice Support Agent",
     group: "ai-automation",

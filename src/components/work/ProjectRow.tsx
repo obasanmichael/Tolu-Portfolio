@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/icons";
-import { RenderNotice } from "@/components/project/RenderNotice";
 import { DemoLogin } from "@/components/project/AccessPanel";
 import { ProjectThumb } from "./ProjectThumb";
 import { type Project } from "@/types";
@@ -82,7 +81,6 @@ export function ProjectRow({ project, priority = false }: { project: Project; pr
           ))}
         </ul>
 
-        {project.renderSuspended && <RenderNotice scope={project.renderSuspended} className="mt-6" />}
 
         <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-1 pt-8">
           {project.detail && (
