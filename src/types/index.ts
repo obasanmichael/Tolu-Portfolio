@@ -23,6 +23,8 @@ export interface Project {
   isPrivate?: boolean;
   /** Screenshot under /public, used where there's no walkthrough thumbnail. */
   image?: string;
+  /** Two or more screenshots under /public; shown as an auto-advancing carousel instead of `image`. */
+  images?: string[];
   year?: string;
   /** Shared test account, shown on the project row for projects without a detail page. */
   demoLogin?: { role: string; email: string; password: string };

@@ -153,6 +153,19 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "tendcue",
+    images: ["/projects/tendcue-site.jpg", "/projects/tendcue-app.jpg"],
+    name: "Tendcue",
+    type: "Pharmacy SaaS, web and PWA",
+    group: "products",
+    status: "mvp",
+    tagline:
+      "Patient records for pharmacies, with WhatsApp follow-ups sent automatically after every visit.",
+    chips: ["Multi-tenant, white-labelled", "Automatic WhatsApp reminders", "Row-level security per pharmacy"],
+    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS", "WhatsApp Business API"],
+    links: { live: "https://tendcue.com/" },
+  },
+  {
     id: "jobtrackr",
     image: "/projects/jobtrackr.jpg",
     demoLogin: { role: "Demo", email: "obasantolu@gmail.com", password: "abcd1234" },

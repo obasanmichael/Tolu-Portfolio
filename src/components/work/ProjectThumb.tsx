@@ -2,6 +2,7 @@ import { ViewTransition } from "react";
 import Image from "next/image";
 import { getWalkthroughMeta } from "@/lib/walkthrough";
 import { ThumbMedia } from "./ThumbMedia";
+import { ThumbCarousel } from "./ThumbCarousel";
 import { CursorWipe } from "@/components/motion/CursorWipe";
 import { type Project } from "@/types";
 
@@ -18,6 +19,8 @@ export async function ProjectThumb({ project, priority = false }: { project: Pro
         priority={priority}
       />
     </div>
+  ) : project.images && project.images.length > 1 ? (
+    <ThumbCarousel images={project.images} name={project.name} priority={priority} />
   ) : project.image ? (
     <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[14px] bg-band">
       <Image
