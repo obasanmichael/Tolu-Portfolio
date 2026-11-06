@@ -167,7 +167,7 @@ export const projects: Project[] = [
   },
   {
     id: "jobtrackr",
-    image: "/projects/jobtrackr.jpg",
+    images: ["/projects/jobtrackr.jpg", "/projects/jobtrackr-login.jpg"],
     demoLogin: { role: "Demo", email: "obasantolu@gmail.com", password: "abcd1234" },
     name: "JobTrackr",
     type: "Web + Mobile SaaS",
@@ -341,7 +341,7 @@ export const projects: Project[] = [
   },
   {
     id: "travely",
-    image: "/projects/travely.jpg",
+    images: ["/projects/travely.jpg", "/projects/travely-app.jpg"],
     name: "Travely",
     type: "Travel Recommendation App",
     group: "products",
